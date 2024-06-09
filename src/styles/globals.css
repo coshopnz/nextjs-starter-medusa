@@ -110,3 +110,8 @@
     @apply text-[32px] leading-[44px] font-semibold;
   }
 }
+
+
+.text-shadow{
+  text-shadow: rgb(0, 0, 0) 5px 0 10px;
+}
