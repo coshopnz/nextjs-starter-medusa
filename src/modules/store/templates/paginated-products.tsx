@@ -62,7 +62,10 @@ export default async function PaginatedProducts({
 
   return (
     <>
-      <ul className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8" data-testid="products-list">
+      <ul
+        className="grid grid-cols-1 w-full lg:grid-cols-2 gap-x-6 md:gap-x-4 gap-y-8 justify-center"
+        data-testid="products-list"
+      >
         {products.map((p) => {
           return (
             <li key={p.id}>
@@ -71,7 +74,13 @@ export default async function PaginatedProducts({
           )
         })}
       </ul>
-      {totalPages > 1 && <Pagination data-testid="product-pagination" page={page} totalPages={totalPages} />}
+      {totalPages > 1 && (
+        <Pagination
+          data-testid="product-pagination"
+          page={page}
+          totalPages={totalPages}
+        />
+      )}
     </>
   )
 }

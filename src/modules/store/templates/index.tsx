@@ -24,15 +24,17 @@ const StoreTemplate = ({
     >
       {/* <RefinementList sortBy={sortBy || "created_at"} /> */}
       <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
+        <div className="mb-8 flex justify-center text-2xl-semi">
           <h1 data-testid="store-page-title">All Food Boxes</h1>
         </div>
         <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sortBy || "created_at"}
-            page={pageNumber}
-            countryCode={countryCode}
-          />
+          <div className="flex w-full justify-center">
+            <PaginatedProducts
+              sortBy={sortBy || "created_at"}
+              page={pageNumber}
+              countryCode={countryCode}
+            />
+          </div>
         </Suspense>
       </div>
     </div>

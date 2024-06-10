@@ -22,7 +22,7 @@ export default async function Nav() {
             <LocalizedClientLink
               href="/"
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
-              data-testid="nav-store-link"
+              data-testid="nav-home-link"
             >
               CoShop
             </LocalizedClientLink>
@@ -30,7 +30,7 @@ export default async function Nav() {
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
-              {process.env.FEATURE_SEARCH_ENABLED && (
+              {/* {process.env.FEATURE_SEARCH_ENABLED && (
                 <LocalizedClientLink
                   className="hover:text-ui-fg-base"
                   href="/search"
@@ -39,11 +39,11 @@ export default async function Nav() {
                 >
                   Search
                 </LocalizedClientLink>
-              )}
+              )} */}
               <LocalizedClientLink
                 className="hover:text-ui-fg-base"
-                href="/account"
-                data-testid="nav-account-link"
+                href="/shop"
+                data-testid="nav-shop-link"
               >
                 Shop
               </LocalizedClientLink>
