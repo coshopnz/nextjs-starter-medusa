@@ -36,7 +36,7 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
       >
         <OrderDetails order={order} showStatus />
         <Items items={order.items} region={order.region} />
-        <ShippingDetails order={order} />
+        {/* <ShippingDetails order={order} /> */}
         <OrderSummary order={order} />
         <Help />
       </div>

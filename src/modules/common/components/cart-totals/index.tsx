@@ -54,7 +54,7 @@ const CartTotals: React.FC<CartTotalsProps> = ({ data }) => {
             </span>
           </div>
         )} */}
-        {/* <div className="flex items-center justify-between">
+        {/* {/* <div className="flex items-center justify-between">
           <span>Shipping</span>
           <span data-testid="cart-shipping" data-value={shipping_total || 0}>
             {getAmount(shipping_total)}
