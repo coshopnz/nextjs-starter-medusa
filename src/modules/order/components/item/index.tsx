@@ -20,10 +20,10 @@ const Item = ({ item, region }: ItemProps) => {
         </div>
       </Table.Cell>
 
-      <Table.Cell className="text-left">
+      {/* <Table.Cell className="text-left">
         <Text className="txt-medium-plus text-ui-fg-base" data-testid="product-name">{item.title}</Text>
         <LineItemOptions variant={item.variant} data-testid="product-variant" />
-      </Table.Cell>
+      </Table.Cell> */}
 
       <Table.Cell className="!pr-0">
         <span className="!pr-0 flex flex-col items-end h-full justify-center">

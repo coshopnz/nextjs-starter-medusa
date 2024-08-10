@@ -59,10 +59,10 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
         </LocalizedClientLink>
       </Table.Cell>
 
-      <Table.Cell className="text-left">
+      {/* <Table.Cell className="text-left">
         <Text className="txt-medium-plus text-ui-fg-base" data-testid="product-title">{item.title}</Text>
         <LineItemOptions variant={item.variant} data-testid="product-variant" />
-      </Table.Cell>
+      </Table.Cell> */}
 
       {type === "full" && (
         <Table.Cell>

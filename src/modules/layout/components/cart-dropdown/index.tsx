@@ -133,11 +133,11 @@ const CartDropdown = ({
                                     {item.title}
                                   </LocalizedClientLink>
                                 </h3>
-                                <LineItemOptions
+                                {/* <LineItemOptions
                                   variant={item.variant}
                                   data-testid="cart-item-variant"
                                   data-value={item.variant}
-                                />
+                                /> */}
                                 <span
                                   data-testid="cart-item-quantity"
                                   data-value={item.quantity}
