@@ -118,35 +118,16 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     shipping_address: {
       first_name: formData.get("shipping_address.first_name"),
       last_name: formData.get("shipping_address.last_name"),
-      // address_1: formData.get("shipping_address.address_1"),
-      // address_2: "",
-      // company: formData.get("shipping_address.company"),
-      postal_code: formData.get("shipping_address.postal_code"),
-      city: formData.get("shipping_address.city"),
-      country_code: formData.get("shipping_address.country_code"),
+      postal_code: formData.get("shipping_address.postal_code") || "6012",
+      city: formData.get("shipping_address.city") || 'Wellington',
+      country_code: formData.get("shipping_address.country_code") || 'nz',
       // province: formData.get("shipping_address.province"),
       phone: formData.get("shipping_address.phone"),
     },
     email: formData.get("email"),
   } as StorePostCartsCartReq
 
-  const sameAsBilling = formData.get("same_as_billing")
-
-  if (sameAsBilling === "on") data.billing_address = data.shipping_address
-
-  if (sameAsBilling !== "on")
-    data.billing_address = {
-      first_name: formData.get("billing_address.first_name"),
-      last_name: formData.get("billing_address.last_name"),
-      address_1: formData.get("billing_address.address_1"),
-      address_2: "",
-      company: formData.get("billing_address.company"),
-      postal_code: formData.get("billing_address.postal_code"),
-      city: formData.get("billing_address.city"),
-      country_code: formData.get("billing_address.country_code"),
-      province: formData.get("billing_address.province"),
-      phone: formData.get("billing_address.phone"),
-    } as StorePostCartsCartReq
+  console.log('data', data)
 
   try {
     await updateCart(cartId, data)
@@ -154,9 +135,12 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
   } catch (error: any) {
     return error.toString()
   }
-
+// NOTE: I have commented out the original redirect code and replaced it with country code hard-coded for now
+// this was a more simple solution then checking if the data.shipping_address object exists and if it has a country_code property
+// when the route will always use nz country code anyway
+//for reference, the dynamic redirect was:  `/${formData.get("shipping_address.country_code")}/checkout?step=payment`
   redirect(
-    `/${formData.get("shipping_address.country_code")}/checkout?step=payment`
+    `/nz/checkout?step=payment`
   )
 }
 
