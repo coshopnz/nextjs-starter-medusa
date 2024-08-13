@@ -22,13 +22,10 @@ const ShippingAddress = ({
   const [formData, setFormData] = useState({
     "shipping_address.first_name": cart?.shipping_address?.first_name || "",
     "shipping_address.last_name": cart?.shipping_address?.last_name || "",
-    // "shipping_address.address_1": cart?.shipping_address?.address_1 || "",
-    // "shipping_address.company": cart?.shipping_address?.company || "",
-    "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
-    "shipping_address.city": cart?.shipping_address?.city || "",
-    "shipping_address.country_code":
-      cart?.shipping_address?.country_code || "",
-    // "shipping_address.province": cart?.shipping_address?.province || "",
+    // "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
+    // "shipping_address.city": cart?.shipping_address?.city || "",
+    // "shipping_address.country_code":
+    //   cart?.shipping_address?.country_code || "",
     email: cart?.email || "",
     "shipping_address.phone": cart?.shipping_address?.phone || "",
   })
@@ -52,13 +49,10 @@ const ShippingAddress = ({
     setFormData({
       "shipping_address.first_name": cart?.shipping_address?.first_name || "",
       "shipping_address.last_name": cart?.shipping_address?.last_name || "",
-      // "shipping_address.address_1": cart?.shipping_address?.address_1 || "",
-      // "shipping_address.company": cart?.shipping_address?.company || "",
-      "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
-      "shipping_address.city": cart?.shipping_address?.city || "",
-      "shipping_address.country_code":
-        cart?.shipping_address?.country_code || "",
-      // "shipping_address.province": cart?.shipping_address?.province || "",
+      // "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
+      // "shipping_address.city": cart?.shipping_address?.city || "",
+      // "shipping_address.country_code":
+      //   cart?.shipping_address?.country_code || "",
       email: cart?.email || "",
       "shipping_address.phone": cart?.shipping_address?.phone || "",
     })
@@ -141,7 +135,7 @@ const ShippingAddress = ({
           autoComplete="organization"
           data-testid="shipping-company-input"
         /> */}
-        <Input
+        {/* <Input
           label="Postal code"
           name="shipping_address.postal_code"
           autoComplete="postal-code"
@@ -149,8 +143,8 @@ const ShippingAddress = ({
           onChange={handleChange}
           required
           data-testid="shipping-postal-code-input"
-        />
-        <Input
+        /> */}
+        {/* <Input
           label="City"
           name="shipping_address.city"
           autoComplete="address-level2"
@@ -158,8 +152,8 @@ const ShippingAddress = ({
           onChange={handleChange}
           required
           data-testid="shipping-city-input"
-        />
-        <CountrySelect
+        /> */}
+        {/* <CountrySelect
           name="shipping_address.country_code"
           autoComplete="country"
           region={cart?.region}
@@ -167,7 +161,7 @@ const ShippingAddress = ({
           onChange={handleChange}
           required
           data-testid="shipping-country-select"
-        />
+        /> */}
         {/* <Input
           label="State / Province"
           name="shipping_address.province"
@@ -187,27 +181,6 @@ const ShippingAddress = ({
           data-testid="billing-address-checkbox"
         />
       </div>
-      {/* <div className="grid grid-cols-2 gap-4 mb-4">
-        <Input
-          label="Email"
-          name="email"
-          type="email"
-          title="Enter a valid email address."
-          autoComplete="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          data-testid="shipping-email-input"
-        />
-        <Input
-          label="Phone"
-          name="shipping_address.phone"
-          autoComplete="tel"
-          value={formData["shipping_address.phone"]}
-          onChange={handleChange}
-          data-testid="shipping-phone-input"
-        />
-      </div> */}
     </>
   )
 }
