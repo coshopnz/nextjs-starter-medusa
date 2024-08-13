@@ -28,7 +28,7 @@ export default async function ProductPreview({
   } 
 
   // TODO refactor this function somewhere globally as our region will never change and it is duplicated a lot
-  // formats the product price
+  // formats the product price to incl GST
   const getAmount = (amount: number | null | undefined) => {
     return formatAmount({
       amount: amount || 0,
