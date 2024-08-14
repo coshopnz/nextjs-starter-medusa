@@ -22,10 +22,6 @@ const ShippingAddress = ({
   const [formData, setFormData] = useState({
     "shipping_address.first_name": cart?.shipping_address?.first_name || "",
     "shipping_address.last_name": cart?.shipping_address?.last_name || "",
-    // "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
-    // "shipping_address.city": cart?.shipping_address?.city || "",
-    // "shipping_address.country_code":
-    //   cart?.shipping_address?.country_code || "",
     email: cart?.email || "",
     "shipping_address.phone": cart?.shipping_address?.phone || "",
   })
@@ -49,10 +45,6 @@ const ShippingAddress = ({
     setFormData({
       "shipping_address.first_name": cart?.shipping_address?.first_name || "",
       "shipping_address.last_name": cart?.shipping_address?.last_name || "",
-      // "shipping_address.postal_code": cart?.shipping_address?.postal_code || "",
-      // "shipping_address.city": cart?.shipping_address?.city || "",
-      // "shipping_address.country_code":
-      //   cart?.shipping_address?.country_code || "",
       email: cart?.email || "",
       "shipping_address.phone": cart?.shipping_address?.phone || "",
     })
@@ -118,58 +110,6 @@ const ShippingAddress = ({
           onChange={handleChange}
           data-testid="shipping-phone-input"
         />
-        {/* <Input
-          label="Address"
-          name="shipping_address.address_1"
-          autoComplete="address-line1"
-          value={formData["shipping_address.address_1"]}
-          onChange={handleChange}
-          required
-          data-testid="shipping-address-input"
-        /> */}
-        {/* <Input
-          label="Company"
-          name="shipping_address.company"
-          value={formData["shipping_address.company"]}
-          onChange={handleChange}
-          autoComplete="organization"
-          data-testid="shipping-company-input"
-        /> */}
-        {/* <Input
-          label="Postal code"
-          name="shipping_address.postal_code"
-          autoComplete="postal-code"
-          value={formData["shipping_address.postal_code"]}
-          onChange={handleChange}
-          required
-          data-testid="shipping-postal-code-input"
-        /> */}
-        {/* <Input
-          label="City"
-          name="shipping_address.city"
-          autoComplete="address-level2"
-          value={formData["shipping_address.city"]}
-          onChange={handleChange}
-          required
-          data-testid="shipping-city-input"
-        /> */}
-        {/* <CountrySelect
-          name="shipping_address.country_code"
-          autoComplete="country"
-          region={cart?.region}
-          value={formData["shipping_address.country_code"]}
-          onChange={handleChange}
-          required
-          data-testid="shipping-country-select"
-        /> */}
-        {/* <Input
-          label="State / Province"
-          name="shipping_address.province"
-          autoComplete="address-level1"
-          value={formData["shipping_address.province"]}
-          onChange={handleChange}
-          data-testid="shipping-province-input"
-        /> */}
       </div>
       {/* TODO can remove the checkbox if it won't impact logic in the order flow but waiting to do more testing  */}
       <div className="hidden my-8">
