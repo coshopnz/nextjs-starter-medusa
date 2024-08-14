@@ -113,7 +113,6 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
 
   if (!cartId) return { message: "No cartId cookie found" }
 
-  // TODO delete commented out data if not being used
   const data = {
     shipping_address: {
       first_name: formData.get("shipping_address.first_name"),
@@ -121,13 +120,16 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
       postal_code: formData.get("shipping_address.postal_code") || "6012",
       city: formData.get("shipping_address.city") || 'Wellington',
       country_code: formData.get("shipping_address.country_code") || 'nz',
-      // province: formData.get("shipping_address.province"),
       phone: formData.get("shipping_address.phone"),
     },
     email: formData.get("email"),
   } as StorePostCartsCartReq
 
-  console.log('data', data)
+  console.log('data', data, 'formData', formData)
+// Shipping details will always be the same as billing details for coshop users
+// save shipping details to billing details as we access this data when a stripe payment is made
+  const sameAsBilling = formData.get("same_as_billing")
+  if (sameAsBilling === "on") data.billing_address = data.shipping_address
 
   try {
     await updateCart(cartId, data)
