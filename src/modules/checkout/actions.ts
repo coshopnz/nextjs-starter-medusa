@@ -125,7 +125,6 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     email: formData.get("email"),
   } as StorePostCartsCartReq
 
-  console.log('data', data, 'formData', formData)
 // Shipping details will always be the same as billing details for coshop users
 // save shipping details to billing details as we access this data when a stripe payment is made
   const sameAsBilling = formData.get("same_as_billing")
