@@ -51,7 +51,7 @@ const Review = ({
               {/* if manual payment, advice the user about bank details, if stripe peayment, advise the user about pick up details */}
               {isManualPayment ? (
                 <Text>Information to complete your bank transfer will show once your order has been placed.</Text>
-                ): (<Text>Details to pick up your order will show once your oder has been placed.</Text>)
+                ): (<Text>Details to pick up your order will show once your order has been placed.</Text>)
               }
               
             </div>
