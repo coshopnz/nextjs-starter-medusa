@@ -16,8 +16,8 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
 
         <Text>Thanks for ordering at your local food Coop! Your food bag(s) will be ready for you to pick up on:</Text>
         <div className="flex flex-col gap-y-2">
-          <Text weight="plus">Thursday 29 August </Text>
-          <Text weight="plus">Between 9:00am - 2:30pm</Text>
+          <Text weight="plus">Every Thursday </Text>
+          <Text weight="plus">Between 8:30am - 10am and 5pm - 6pm</Text>
           <Text weight="plus">At the Karori Community Centre</Text>
           <a href="https://maps.app.goo.gl/zgzzBAuoWW3hTyYz7?g_st=com.google.maps.preview.copy" target="_blank" rel="noopener noreferrer" className="font-semibold underline">Click for directions</a>
         </div>
