@@ -4,7 +4,7 @@ import Image from "next/image"
 const NavLinkLogos = () => (
         <div>
           <LocalizedClientLink
-            href="/products/mixed-bag"
+            href="/store"
             className="flex flex-row items-center h-full uppercase gap-x-2 txt-compact-large-plus sm:txt-compact-xlarge-plus hover:text-ui-fg-base"
             data-testid="nav-store-link"
           >
