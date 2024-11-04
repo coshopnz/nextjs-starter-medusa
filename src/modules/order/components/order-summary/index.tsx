@@ -7,10 +7,10 @@ type OrderSummaryProps = {
 
 const OrderSummary = ({ order }: OrderSummaryProps) => {
 
-  // this function checks the maount is valid and calls a global function with three params:
+  // this function checks the amount is valid and calls a global function with three params:
   // - amount to be formatted
   // - region
-  // - includeTaxes explicitly set to false so the maount returned does not include taxes
+  // - includeTaxes explicitly set to false so the amount returned does not include taxes
   const getAmount = (amount?: number | null) => {
     if (!amount) {
       return

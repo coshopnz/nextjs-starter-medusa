@@ -26,6 +26,9 @@ const Review = ({
     // returns true if user selected manual payment option
     const isManualPayment = cart.payment_session?.provider_id === "manual"
 
+    // Add minimum order check (cart.total is in cents, so 1000 = $10)
+    const isOrderTotalValid = (cart.total ?? 0) >= 1000
+
   return (
     <div className="bg-white">
       <div className="flex flex-row items-center justify-between mb-6">
@@ -45,18 +48,27 @@ const Review = ({
         <>
           <div className="flex items-start w-full mb-6 gap-x-1">
             <div className="w-full">
-              <Text className="mb-1 txt-medium-plus text-ui-fg-base">
-              Double-check that everything looks correct, then click the Place Order button to confirm your order. 
-              </Text>
-              {/* if manual payment, advice the user about bank details, if stripe peayment, advise the user about pick up details */}
-              {isManualPayment ? (
-                <Text>Information to complete your bank transfer will show once your order has been placed.</Text>
-                ): (<Text>Details to pick up your order will show once your order has been placed.</Text>)
-              }
-              
+              {isOrderTotalValid ? (
+                <>
+                  <Text className="mb-1 txt-medium-plus text-ui-fg-base">
+                    Double-check that everything looks correct, then click the Place Order button to confirm your order. 
+                  </Text>
+                  {isManualPayment ? (
+                    <Text>Information to complete your bank transfer will show once your order has been placed.</Text>
+                  ) : (
+                    <Text>Details to pick up your order will show once your order has been placed.</Text>
+                  )}
+                </>
+              ) : (
+                <Text className="mb-1 txt-medium-plus text-ui-fg-error">
+                  Minimum order amount is $10. Please add more items to your cart.
+                </Text>
+              )}
             </div>
           </div>
-          <PaymentButton cart={cart} data-testid="submit-order-button" />
+          {isOrderTotalValid && (
+            <PaymentButton cart={cart} data-testid="submit-order-button" />
+          )}
         </>
       )}
     </div>
