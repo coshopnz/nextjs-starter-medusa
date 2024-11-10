@@ -52,12 +52,15 @@ const Review = ({
             <div className="w-full">
               {isOrderTotalValid ? (
                 <>
-                  <Text className="mb-1 txt-medium-plus text-ui-fg-base">
-                    Please confirm the notice below and then click the Place Order button to confirm your order. 
+                  <Text className="mb-1 txt-medium-plus text-ui-fg-base font-normal">
+                  Produce must be picked up at 8:30am-10am and 5pm-6pm from the Karori Community Center
+                  on the Thursday the same week as your order is placed.
+                  </Text>
+                  <Text>
+                    Please confirm the notice below and then click the Place Order button to confirm your order. Information to complete your bank transfer will show once your order has been placed.
                   </Text>
                   {isManualPayment ? (
                     <>
-                      <Text>Information to complete your bank transfer will show once your order has been placed.</Text>
                       <div className="flex items-center gap-x-2 mt-4">
                         <input
                           type="checkbox"
