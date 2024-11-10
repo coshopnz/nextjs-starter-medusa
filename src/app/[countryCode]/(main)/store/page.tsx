@@ -4,8 +4,8 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import StoreTemplate from "@modules/store/templates"
 
 export const metadata: Metadata = {
-  title: "Store",
-  description: "Explore all of our products.",
+  title: "Hauora Kai Karori by CoShop",
+  description: "Cheap, fresh, healthy produce for Karori",
 }
 
 type Params = {
