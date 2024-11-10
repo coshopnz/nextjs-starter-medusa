@@ -33,7 +33,7 @@ const BankPaymentInstructions: React.FC<BankPaymentInstructionsProps> = ({ order
         <Text><span className="font-semibold">Bank account name:</span> CoShop</Text>
         <Text><span className="font-semibold">Account number:</span> 38-9025-0215033-00</Text>
         <Text><span className="font-semibold">Reference:</span> {order.display_id}</Text>
-        <Text><span className="font-semibold">Amount due (incl tax):</span> {getAmount(order.total)}</Text>
+        <Text><span className="font-semibold">Amount due (incl GST):</span> {getAmount(order.total)}</Text>
       <Text>NOTE: Your order is not ready until you have paid the amount due.</Text>
       <Text>If you have any questions or feedback, reach out to <a className="underline" href="mailto:orders@coshop.nz">orders@coshop.nz</a></Text>
       </div>
