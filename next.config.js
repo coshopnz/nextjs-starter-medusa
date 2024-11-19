@@ -9,6 +9,12 @@ const nextConfig = withStoreConfig({
   features: store.features,
   reactStrictMode: true,
   images: {
+    formats: [],
+    minimumCacheTTL: 60,
+    maximumCacheTTL: 300,
+    // Add cache cleanup
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     remotePatterns: [
       {
         protocol: "http",
@@ -18,14 +24,6 @@ const nextConfig = withStoreConfig({
         protocol: "https",
         hostname: "storage.googleapis.com",
         pathname: "/cs-medusa-images-demo/**" /** This needs to be an env variable */
-      },
-      {
-        protocol: "https",
-        hostname: "medusa-server-testing.s3.amazonaws.com",
-      },
-      {
-        protocol: "https",
-        hostname: "medusa-server-testing.s3.us-east-1.amazonaws.com",
       },
     ],
   },
