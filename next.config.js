@@ -1,4 +1,3 @@
-const { PathnameContext } = require("next/dist/shared/lib/hooks-client-context.shared-runtime")
 const { withStoreConfig } = require("./store-config")
 const store = require("./store.config.json")
 
