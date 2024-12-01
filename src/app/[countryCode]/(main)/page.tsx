@@ -8,9 +8,27 @@ import { ProductCollectionWithPreviews } from "types/global"
 import { cache } from "react"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
+  title: "Hauora Kai Karori",
   description:
-    "A performant frontend ecommerce starter template with Next.js 14 and Medusa.",
+    "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+  openGraph: {
+    title: "Hauora Kai Karori",
+    description: "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+    images: [
+      {
+        url: "/coop-img.jpg", // Replace with your image path
+        width: 1300,
+        height: 1289,
+        alt: "Hauora Kai Karori",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hauora Kai Karori",
+    description: "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+    images: ["/coop-img.jpg"], // Replace with your image path
+  },
 }
 
 const getCollectionsWithProducts = cache(
