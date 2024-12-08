@@ -16,7 +16,7 @@ const Hero = () => {
             level="h1"
             className="text-2xl leading-8 text-ui-fg-base font-normal"
           >
-            For Thursday 5th November Pickup
+            For Thursday 12th December Pickup
           </Heading>
           <Text>
             8:30am-10am and 5pm-6pm from the Karori Community Centre
