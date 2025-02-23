@@ -42,7 +42,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
 
   return (
     <div className="flex flex-col">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-end gap-2">
         <CartItemSelect
           value={quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
@@ -58,7 +58,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
           )}
         </CartItemSelect>
         <Button
-          className="flex-1 h-8 text-sm px-3"
+          className="h-8 text-sm px-3 w-24"
           variant="primary"
           onClick={handleAddToCart}
           disabled={!inStock || isAdding}
@@ -73,7 +73,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
         </Button>
       </div>
       {error && (
-        <Text className="text-red-500 text-xs mt-1">{error}</Text>
+        <Text className="text-red-500 text-xs mt-1 text-right">{error}</Text>
       )}
     </div>
   )
