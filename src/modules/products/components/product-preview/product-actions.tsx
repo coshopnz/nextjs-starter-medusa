@@ -41,8 +41,8 @@ export default function ProductActions({ product, region }: ProductActionsProps)
   const inStock = inventoryQuantity > 0
 
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center justify-end gap-2">
+    <div className="flex flex-col w-full">
+      <div className="flex items-center gap-2">
         <CartItemSelect
           value={quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
@@ -73,7 +73,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
         </Button>
       </div>
       {error && (
-        <Text className="text-red-500 text-xs mt-1 text-right">{error}</Text>
+        <Text className="text-red-500 text-xs mt-1">{error}</Text>
       )}
     </div>
   )

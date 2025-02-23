@@ -33,19 +33,20 @@ export default async function ProductPreview({
     })
   }
 
-    // Store the product price in a variable
-    const priceInclGst = getAmount(pricedProduct.variants[0]?.original_price_incl_tax)
+  const priceInclGst = getAmount(pricedProduct.variants[0]?.original_price_incl_tax)
 
   return (
     <div className="group h-full">
       <div data-testid="product-wrapper" className="flex flex-col h-full">
-        <LocalizedClientLink href={`/products/${productPreview.handle}`} className="flex-grow">
-          <Thumbnail
-            thumbnail={productPreview.thumbnail}
-            size="full"
-            isFeatured={isFeatured}
-          />
-        </LocalizedClientLink>
+        <div className="flex-grow">
+          <LocalizedClientLink href={`/products/${productPreview.handle}`}>
+            <Thumbnail
+              thumbnail={productPreview.thumbnail}
+              size="full"
+              isFeatured={isFeatured}
+            />
+          </LocalizedClientLink>
+        </div>
         <div className="flex flex-col mt-2">
           <div className="flex justify-between items-center mb-1">
             <Text className="text-ui-fg-subtle font-medium" data-testid="product-title">{productPreview.title}</Text>
