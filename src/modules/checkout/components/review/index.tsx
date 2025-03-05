@@ -6,6 +6,7 @@ import PaymentButton from "../payment-button"
 import { useSearchParams } from "next/navigation"
 import { Cart } from "@medusajs/medusa"
 import { useState } from "react"
+import { useCheckout } from "../../context/checkout-context"
 
 const Review = ({
   cart,
@@ -14,6 +15,7 @@ const Review = ({
 }) => {
   const searchParams = useSearchParams()
   const [pickupConfirmed, setPickupConfirmed] = useState(false)
+  const { pickupLocation, setPickupLocation } = useCheckout()
 
   const isOpen = searchParams.get("step") === "review"
 
@@ -22,14 +24,14 @@ const Review = ({
     cart?.gift_cards && cart?.gift_cards?.length > 0 && cart?.total === 0
   
     
-    // returns true if payment session is not null. !! used to convert payment session object to a boolean
-    const previousStepsCompleted = !!cart.payment_session  
+  // returns true if payment session is not null. !! used to convert payment session object to a boolean
+  const previousStepsCompleted = !!cart.payment_session  
 
-    // returns true if user selected manual payment option
-    const isManualPayment = cart.payment_session?.provider_id === "manual"
+  // returns true if user selected manual payment option
+  const isManualPayment = cart.payment_session?.provider_id === "manual"
 
-    // Add minimum order check (cart.total is in cents, so 1000 = $10)
-    const isOrderTotalValid = (cart.total ?? 0) >= 1000
+  // Add minimum order check (cart.total is in cents, so 1000 = $10)
+  const isOrderTotalValid = (cart.total ?? 0) >= 1000
 
   return (
     <div className="bg-white">
@@ -53,9 +55,51 @@ const Review = ({
               {isOrderTotalValid ? (
                 <>
                   <Text className="mb-1 txt-medium-plus text-ui-fg-base font-normal">
-                  Produce must be picked up at 8:30am-10am and 5pm-6pm from the Karori Community Center
-                  on the Thursday the same week as your order is placed.
+                    Produce must be picked up at 8:30am-10am and 5pm-6pm on the Thursday the same week as your order is placed.
                   </Text>
+                  
+                  {/* Pickup Location Selection */}
+                  <div className="my-4">
+                    <Text className="mb-2 font-medium">Please select your pickup location:</Text>
+                    <div className="flex flex-col gap-y-2">
+                      <div className="flex items-center gap-x-2">
+                        <input
+                          type="radio"
+                          id="location-central-park"
+                          name="pickup-location"
+                          value="Central Park Flats"
+                          checked={pickupLocation === "Central Park Flats"}
+                          onChange={(e) => setPickupLocation(e.target.value)}
+                          className="h-4 w-4"
+                          data-testid="pickup-location-central-park"
+                        />
+                        <label htmlFor="location-central-park" className="text-base text-gray-700">
+                          Central Park Flats
+                        </label>
+                      </div>
+                      <div className="flex items-center gap-x-2">
+                        <input
+                          type="radio"
+                          id="location-karori"
+                          name="pickup-location"
+                          value="Karori Community Center"
+                          checked={pickupLocation === "Karori Community Center"}
+                          onChange={(e) => setPickupLocation(e.target.value)}
+                          className="h-4 w-4"
+                          data-testid="pickup-location-karori"
+                        />
+                        <label htmlFor="location-karori" className="text-base text-gray-700">
+                          Karori Community Center
+                        </label>
+                      </div>
+                    </div>
+                    {isOpen && pickupLocation === "" && (
+                      <Text className="mt-1 text-sm text-ui-fg-error">
+                        Please select a pickup location
+                      </Text>
+                    )}
+                  </div>
+                  
                   <Text>
                     Please confirm the notice below and then click the Place Order button to confirm your order. Information to complete your bank transfer will show once your order has been placed.
                   </Text>
@@ -67,9 +111,11 @@ const Review = ({
                           id="pickup-confirmation"
                           checked={pickupConfirmed}
                           onChange={(e) => setPickupConfirmed(e.target.checked)}
-                          className="h-10 w-10 rounded border-gray-300"
+                          className="h-4 w-4 rounded border-gray-300"
                         />
+                        <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
                           ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
+                        </label>
                       </div>
                     </>
                   ) : (
@@ -81,10 +127,10 @@ const Review = ({
                           id="pickup-confirmation"
                           checked={pickupConfirmed}
                           onChange={(e) => setPickupConfirmed(e.target.checked)}
-                          className="h-10 w-10 rounded border-gray-300"
+                          className="h-4 w-4 rounded border-gray-300"
                         />
-                        <label htmlFor="pickup-confirmation" className="text-small-regular text-gray-700">
-                        ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
+                        <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
+                          ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
                         </label>
                       </div>
                     </>
@@ -97,7 +143,7 @@ const Review = ({
               )}
             </div>
           </div>
-          {isOrderTotalValid && pickupConfirmed && (
+          {isOrderTotalValid && pickupConfirmed && pickupLocation !== "" && (
             <PaymentButton cart={cart} data-testid="submit-order-button" />
           )}
         </>

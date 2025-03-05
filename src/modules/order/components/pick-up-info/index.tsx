@@ -6,6 +6,13 @@ type PickUpInfoProps = {
 }
 
 const PickUpInfo = ({ order }: PickUpInfoProps) => {
+  // Get pickup location from order metadata
+  const pickupLocation = order.metadata?.pickup_location as string || "Karori Community Centre"
+
+  // Set map URL based on pickup location
+  const mapUrl = pickupLocation === "Central Park Flats" 
+    ? "https://maps.app.goo.gl/gVJ95bD4mH33nHyL8" // Central Park Flats location
+    : "https://maps.app.goo.gl/zgzzBAuoWW3hTyYz7" // Karori Community Center location
 
   return (
     <div>
@@ -18,8 +25,8 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
         <div className="flex flex-col gap-y-2">
           <Text weight="plus">Every Thursday </Text>
           <Text weight="plus">Between 8:30am - 10am and 5pm - 6pm</Text>
-          <Text weight="plus">At the Karori Community Centre</Text>
-          <a href="https://maps.app.goo.gl/zgzzBAuoWW3hTyYz7?g_st=com.google.maps.preview.copy" target="_blank" rel="noopener noreferrer" className="font-semibold underline">Click for directions</a>
+          <Text weight="plus">At the {pickupLocation}</Text>
+          <a href={mapUrl} target="_blank" rel="noopener noreferrer" className="font-semibold underline">Click for directions</a>
         </div>
       </div>
     </div>

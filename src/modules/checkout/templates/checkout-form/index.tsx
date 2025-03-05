@@ -8,6 +8,7 @@ import Addresses from "@modules/checkout/components/addresses"
 import Payment from "@modules/checkout/components/payment"
 import Review from "@modules/checkout/components/review"
 import Shipping from "@modules/checkout/components/shipping"
+import { CheckoutProvider } from "@modules/checkout/context/checkout-context"
 import { cookies } from "next/headers"
 import { CartWithCheckoutStep } from "types/global"
 
@@ -43,27 +44,29 @@ export default async function CheckoutForm() {
   const customer = await getCustomer()
 
   return (
-    <div>
-      <div className="grid w-full grid-cols-1 gap-y-8">
-        <div>
-          <Addresses cart={cart} customer={customer} />
-        </div>
+    <CheckoutProvider>
+      <div>
+        <div className="grid w-full grid-cols-1 gap-y-8">
+          <div>
+            <Addresses cart={cart} customer={customer} />
+          </div>
 
-        {/* <div>
-          <Shipping
-            cart={cart}
-            availableShippingMethods={availableShippingMethods}
-          />
-        </div> */}
+          {/* <div>
+            <Shipping
+              cart={cart}
+              availableShippingMethods={availableShippingMethods}
+            />
+          </div> */}
 
-        <div>
-          <Payment cart={cart} />
-        </div>
+          <div>
+            <Payment cart={cart} />
+          </div>
 
-        <div>
-          <Review cart={cart} />
+          <div>
+            <Review cart={cart} />
+          </div>
         </div>
       </div>
-    </div>
+    </CheckoutProvider>
   )
 }

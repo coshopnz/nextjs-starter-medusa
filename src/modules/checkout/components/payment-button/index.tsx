@@ -9,6 +9,7 @@ import { placeOrder } from "@modules/checkout/actions"
 import React, { useState } from "react"
 import ErrorMessage from "../error-message"
 import Spinner from "@modules/common/icons/spinner"
+import { useCheckout } from "../../context/checkout-context"
 
 type PaymentButtonProps = {
   cart: Omit<Cart, "refundable_amount" | "refunded_total">
@@ -19,6 +20,8 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
   "data-testid": dataTestId,
 }) => {
+  const { pickupLocation } = useCheckout()
+  
   // TODO tidy up this logic by deleting comments if confirmed data is not needed
   const notReady =
     !cart ||
@@ -66,10 +69,11 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 
 const GiftCardPaymentButton = () => {
   const [submitting, setSubmitting] = useState(false)
+  const { pickupLocation } = useCheckout()
 
   const handleOrder = async () => {
     setSubmitting(true)
-    await placeOrder()
+    await placeOrder(pickupLocation)
   }
 
   return (
@@ -94,9 +98,10 @@ const StripePaymentButton = ({
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { pickupLocation } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder().catch(() => {
+    await placeOrder(pickupLocation).catch(() => {
       setErrorMessage("An error occurred, please try again.")
       setSubmitting(false)
     })
@@ -196,9 +201,10 @@ const PayPalPaymentButton = ({
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { pickupLocation } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder().catch(() => {
+    await placeOrder(pickupLocation).catch(() => {
       setErrorMessage("An error occurred, please try again.")
       setSubmitting(false)
     })
@@ -253,9 +259,10 @@ const PayPalPaymentButton = ({
 const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { pickupLocation } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder().catch((err) => {
+    await placeOrder(pickupLocation).catch((err) => {
       setErrorMessage(err.toString())
       setSubmitting(false)
     })

@@ -173,7 +173,7 @@ export async function setPaymentMethod(providerId: string) {
 }
 
 // this action is called when the user clicks the "Place Order" button to finalise the checkout process and redirect the user to the checkout page
-export async function placeOrder() {
+export async function placeOrder(pickupLocation?: string) {
   const cartId = cookies().get("_medusa_cart_id")?.value
 
   if (!cartId) throw new Error("No cartId cookie found")
@@ -181,6 +181,16 @@ export async function placeOrder() {
   let cart
 
   try {
+    // Add pickup location to cart metadata before completing the order
+    if (pickupLocation) {
+      // Use type assertion to include metadata in the cart update
+      await updateCart(cartId, {
+        metadata: {
+          pickup_location: pickupLocation
+        }
+      } as unknown as StorePostCartsCartReq)
+    }
+
     // completeCart is a Medusa API endpoint that will finalise the cart and create an order or throw an error if the cart is not ready to be completed
     cart = await completeCart(cartId)
     revalidateTag("cart")
