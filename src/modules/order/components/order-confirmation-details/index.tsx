@@ -2,7 +2,6 @@
 import { Order } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
 import OrderDetails from "../order-details"
-import PickUpInfo from "../pick-up-info"
 import Spinner from "@modules/common/icons/spinner"
 
 import { useEffect, useState } from "react"

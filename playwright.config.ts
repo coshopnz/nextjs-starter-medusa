@@ -27,30 +27,30 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    {
-      name: "setup",
-      testMatch: /global\/setup\.ts/,
-      teardown: "cleanup test database",
-    },
-    {
-      name: "public setup",
-      testMatch: /global\/public-setup\.ts/,
-      teardown: "cleanup test database",
-    },
-    {
-      name: "cleanup test database",
-      testMatch: /global\/teardown\.ts/,
-    },
-    {
-      name: "chromium auth",
-      dependencies: ["setup"],
-      testIgnore: "public/*.spec.ts",
-      use: { ...devices["Desktop Chrome"], storageState: STORAGE_STATE },
-    },
+    // {
+    //   name: "setup",
+    //   testMatch: /global\/setup\.ts/,
+    //   teardown: "cleanup test database",
+    // },
+    // {
+    //   name: "public setup",
+    //   testMatch: /global\/public-setup\.ts/,
+    //   teardown: "cleanup test database",
+    // },
+    // {
+    //   name: "cleanup test database",
+    //   testMatch: /global\/teardown\.ts/,
+    // },
+    // {
+    //   name: "chromium auth",
+    //   dependencies: ["setup"],
+    //   testIgnore: "public/*.spec.ts",
+    //   use: { ...devices["Desktop Chrome"], storageState: STORAGE_STATE },
+    // },
 
     {
       name: "chromium public",
-      dependencies: ["public setup"],
+      // dependencies: ["public setup"],
       testMatch: "public/*.spec.ts",
       use: { ...devices["Desktop Chrome"] },
     },
@@ -68,10 +68,10 @@ export default defineConfig({
     */
   ],
 
-  /* Run your local dev server before starting the tests */
-  webServer: {
-     command: 'yarn start',
-     url: process.env.NEXT_PUBLIC_BASE_URL,
-  //   reuseExistingServer: !process.env.CI,
-  },
+  // /* Run your local dev server before starting the tests */
+  // webServer: {
+  //    command: 'yarn start',
+  //    url: process.env.NEXT_PUBLIC_BASE_URL,
+  // //   reuseExistingServer: !process.env.CI,
+  // },
 })

@@ -5,7 +5,7 @@ import { Heading, Text, clx } from "@medusajs/ui"
 import PaymentButton from "../payment-button"
 import { useSearchParams } from "next/navigation"
 import { Cart } from "@medusajs/medusa"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useCheckout } from "../../context/checkout-context"
 
 const Review = ({
@@ -16,8 +16,9 @@ const Review = ({
   const searchParams = useSearchParams()
   const [pickupConfirmed, setPickupConfirmed] = useState(false)
   const { pickupLocation, setPickupLocation } = useCheckout()
+  const [previousLocation, setPreviousLocation] = useState<string | null>(null)
 
-  const isOpen = searchParams.get("step") === "review"
+  const isOpen = searchParams?.get("step") === "review"
 
   // TODo remove paid by gift card logic
   const paidByGiftcard =
@@ -32,6 +33,34 @@ const Review = ({
 
   // Add minimum order check (cart.total is in cents, so 1000 = $10)
   const isOrderTotalValid = (cart.total ?? 0) >= 1000
+
+  // Check if the customer has a previously selected pickup location
+  useEffect(() => {
+    // If the user hasn't selected a location yet
+    if (!pickupLocation) {
+      // First try to get location from customer metadata (for logged-in users with accounts)
+      if (cart.customer && cart.customer.has_account && cart.customer.metadata) {
+        const customerMetadata = cart.customer.metadata as Record<string, any>
+        
+        if (customerMetadata?.pickup_location) {
+          setPreviousLocation(customerMetadata.pickup_location)
+        }
+      }
+      
+      // If there's a shipping address with a pickup location in address_2
+      if (cart.shipping_address?.address_2 && cart.shipping_address.address_2.startsWith('Pickup: ')) {
+        const extractedLocation = cart.shipping_address.address_2.replace('Pickup: ', '');
+        setPickupLocation(extractedLocation);
+      }
+    }
+  }, [cart.customer, cart.shipping_address, pickupLocation, setPickupLocation]);
+
+  // Use the previously saved location
+  const handleUsePreviousLocation = () => {
+    if (previousLocation) {
+      setPickupLocation(previousLocation)
+    }
+  }
 
   return (
     <div className="bg-white">
@@ -61,6 +90,23 @@ const Review = ({
                   {/* Pickup Location Selection */}
                   <div className="my-4">
                     <Text className="mb-2 font-medium">Please select your pickup location:</Text>
+                    
+                    {/* Show previously selected location for logged-in customer */}
+                    {previousLocation && !pickupLocation && (
+                      <div className="mb-3 p-3 bg-gray-50 rounded-md">
+                        <Text className="text-sm">
+                          You previously selected <strong>{previousLocation}</strong> as your pickup location.
+                        </Text>
+                        <button
+                          onClick={handleUsePreviousLocation}
+                          className="text-sm text-blue-600 hover:text-blue-800 font-medium mt-1"
+                          type="button"
+                        >
+                          Use this location again
+                        </button>
+                      </div>
+                    )}
+                    
                     <div className="flex flex-col gap-y-2">
                       <div className="flex items-center gap-x-2">
                         <input
@@ -93,6 +139,12 @@ const Review = ({
                         </label>
                       </div>
                     </div>
+                    {pickupLocation && (
+                      <Text className="mt-2 text-sm text-ui-fg-base">
+                        Your pickup location ({pickupLocation}) will be stored with your order details.
+                        {cart.customer?.has_account && " It will also be saved for future orders."}
+                      </Text>
+                    )}
                     {isOpen && pickupLocation === "" && (
                       <Text className="mt-1 text-sm text-ui-fg-error">
                         Please select a pickup location
