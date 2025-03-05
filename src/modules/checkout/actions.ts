@@ -187,7 +187,7 @@ export async function placeOrder(pickupLocation?: string) {
     // First, get the current cart to check if there's a customer associated with it
     const currentCart = await getCart(cartId)
     
-    // If pickup location is provided, handle storage appropriately
+    // Handle pickup location if provided
     if (pickupLocation) {
       // For customers with accounts, store in customer metadata for future reference
       if (currentCart && currentCart.customer && currentCart.customer.has_account) {
@@ -236,6 +236,8 @@ export async function placeOrder(pickupLocation?: string) {
       } else {
         console.error("Cannot store pickup location: cart has no shipping address")
       }
+    } else {
+      console.warn("No pickup location provided")
     }
 
     // completeCart is a Medusa API endpoint that will finalise the cart and create an order or throw an error if the cart is not ready to be completed

@@ -3,10 +3,12 @@
 import { Heading, Text, clx } from "@medusajs/ui"
 
 import PaymentButton from "../payment-button"
+import OrderSummary from "../order-summary"
 import { useSearchParams } from "next/navigation"
 import { Cart } from "@medusajs/medusa"
 import { useState, useEffect } from "react"
 import { useCheckout } from "../../context/checkout-context"
+import { usePickupLocation } from "@lib/context/pickup-location-context"
 
 const Review = ({
   cart,
@@ -17,6 +19,7 @@ const Review = ({
   const [pickupConfirmed, setPickupConfirmed] = useState(false)
   const { pickupLocation, setPickupLocation } = useCheckout()
   const [previousLocation, setPreviousLocation] = useState<string | null>(null)
+  const { pickupLocation: globalPickupLocation } = usePickupLocation()
 
   const isOpen = searchParams?.get("step") === "review"
 
@@ -38,8 +41,12 @@ const Review = ({
   useEffect(() => {
     // If the user hasn't selected a location yet
     if (!pickupLocation) {
-      // First try to get location from customer metadata (for logged-in users with accounts)
-      if (cart.customer && cart.customer.has_account && cart.customer.metadata) {
+      // First check if there's a globally selected location
+      if (globalPickupLocation) {
+        setPickupLocation(globalPickupLocation)
+      } 
+      // Then try to get location from customer metadata (for logged-in users with accounts)
+      else if (cart.customer && cart.customer.has_account && cart.customer.metadata) {
         const customerMetadata = cart.customer.metadata as Record<string, any>
         
         if (customerMetadata?.pickup_location) {
@@ -53,7 +60,7 @@ const Review = ({
         setPickupLocation(extractedLocation);
       }
     }
-  }, [cart.customer, cart.shipping_address, pickupLocation, setPickupLocation]);
+  }, [cart.customer, cart.shipping_address, pickupLocation, setPickupLocation, globalPickupLocation]);
 
   // Use the previously saved location
   const handleUsePreviousLocation = () => {
@@ -79,17 +86,72 @@ const Review = ({
       </div>
       {isOpen && previousStepsCompleted && (
         <>
-          <div className="flex items-start w-full mb-6 gap-x-1">
+          {/* Order Details Summary */}
+          <div className="mb-6 p-4 border rounded-lg bg-gray-50">
+            <Heading level="h3" className="text-lg mb-2">
+              Order Details
+            </Heading>
+            
+            {/* Pickup Location Review Section */}
+            <div className="mb-4">
+              <Text className="font-medium text-gray-700">Pickup Location:</Text>
+              {pickupLocation ? (
+                <div className="mt-1 flex items-center">
+                  <div className="bg-green-50 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-2">
+                    ✓ Selected
+                  </div>
+                  <Text className="font-bold">{pickupLocation}</Text>
+                </div>
+              ) : (
+                <div className="mt-1 flex items-center">
+                  <div className="bg-red-50 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-2">
+                    Required
+                  </div>
+                  <Text>No pickup location selected</Text>
+                </div>
+              )}
+              <Text className="text-xs text-gray-500 mt-1">
+                Thursday pickup times: 8:30am-10am and 5pm-6pm
+              </Text>
+            </div>
+            
+            {/* Customer Details */}
+            {cart.shipping_address && (
+              <div className="mb-4">
+                <Text className="font-medium text-gray-700">Customer:</Text>
+                <Text>
+                  {cart.shipping_address.first_name} {cart.shipping_address.last_name}
+                </Text>
+                <Text>{cart.email}</Text>
+              </div>
+            )}
+            
+            {/* Payment Method */}
+            <div>
+              <Text className="font-medium text-gray-700">Payment Method:</Text>
+              <Text>
+                {isManualPayment 
+                  ? "Bank Transfer (details provided after order placement)" 
+                  : cart.payment_session?.provider_id === "stripe"
+                    ? "Credit Card"
+                    : cart.payment_session?.provider_id === "paypal"
+                      ? "PayPal"
+                      : "Other"}
+              </Text>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             <div className="w-full">
               {isOrderTotalValid ? (
                 <>
-                  <Text className="mb-1 txt-medium-plus text-ui-fg-base font-normal">
-                    Produce must be picked up at 8:30am-10am and 5pm-6pm on the Thursday the same week as your order is placed.
+                  <Text className="mb-4 txt-medium-plus text-ui-fg-base font-normal">
+                    Please select your pickup location and confirm the notice below before placing your order.
                   </Text>
                   
                   {/* Pickup Location Selection */}
-                  <div className="my-4">
-                    <Text className="mb-2 font-medium">Please select your pickup location:</Text>
+                  <div className="my-4 p-4 border rounded-lg">
+                    <Text className="mb-2 font-medium">Select Pickup Location:</Text>
                     
                     {/* Show previously selected location for logged-in customer */}
                     {previousLocation && !pickupLocation && (
@@ -152,41 +214,24 @@ const Review = ({
                     )}
                   </div>
                   
-                  <Text>
-                    Please confirm the notice below and then click the Place Order button to confirm your order. Information to complete your bank transfer will show once your order has been placed.
-                  </Text>
-                  {isManualPayment ? (
-                    <>
-                      <div className="flex items-center gap-x-2 mt-4">
-                        <input
-                          type="checkbox"
-                          id="pickup-confirmation"
-                          checked={pickupConfirmed}
-                          onChange={(e) => setPickupConfirmed(e.target.checked)}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
-                          ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
-                        </label>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <Text>Details to pick up your order will show once your order has been placed.</Text>
-                      <div className="flex items-center gap-x-2 mt-4">
-                        <input
-                          type="checkbox"
-                          id="pickup-confirmation"
-                          checked={pickupConfirmed}
-                          onChange={(e) => setPickupConfirmed(e.target.checked)}
-                          className="h-4 w-4 rounded border-gray-300"
-                        />
-                        <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
-                          ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
-                        </label>
-                      </div>
-                    </>
-                  )}
+                  <div className="mt-4 p-4 border rounded-lg">
+                    <Text className="font-medium mb-2">Pickup Policy:</Text>
+                    <Text className="mb-3">
+                      Information to complete your bank transfer will show once your order has been placed.
+                    </Text>
+                    <div className="flex items-center gap-x-2 mt-2">
+                      <input
+                        type="checkbox"
+                        id="pickup-confirmation"
+                        checked={pickupConfirmed}
+                        onChange={(e) => setPickupConfirmed(e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-300"
+                      />
+                      <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
+                        ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
+                      </label>
+                    </div>
+                  </div>
                 </>
               ) : (
                 <Text className="mb-1 txt-medium-plus text-ui-fg-error">
@@ -194,9 +239,17 @@ const Review = ({
                 </Text>
               )}
             </div>
+            
+            {/* Order Summary */}
+            <div>
+              {pickupLocation && <OrderSummary cart={cart} pickupLocation={pickupLocation} />}
+            </div>
           </div>
+          
           {isOrderTotalValid && pickupConfirmed && pickupLocation !== "" && (
-            <PaymentButton cart={cart} data-testid="submit-order-button" />
+            <div className="flex justify-center mt-6">
+              <PaymentButton cart={cart} data-testid="submit-order-button" />
+            </div>
           )}
         </>
       )}

@@ -1,34 +1,48 @@
-import { Github } from "@medusajs/icons"
+"use client"
+
 import { Button, Heading, Text } from "@medusajs/ui"
+import { usePickupLocation } from "@lib/context/pickup-location-context"
+import { useRouter } from "next/navigation"
 
 const Hero = () => {
+  const { pickupLocation } = usePickupLocation()
+  const router = useRouter()
+
   return (
-    <div className="h-[30vh] w-full border-b border-ui-border-base relative bg-ui-bg-subtle">
-      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-16 gap-4">
-        <span>
+    <div className="h-[40vh] w-full border-b border-ui-border-base relative bg-green-50">
+      <div className="absolute inset-0 z-10 flex flex-col justify-center items-center text-center small:p-16 gap-6">
+        <div>
           <Heading
             level="h1"
-            className="text-2xl leading-8 text-ui-fg-base font-normal"
+            className="text-3xl leading-8 text-ui-fg-base font-normal mb-2"
           >
-            Ordering Now Open
+            Hauora Kai Karori
           </Heading>
           <Heading
-            level="h1"
-            className="text-2xl leading-8 text-ui-fg-base font-normal"
+            level="h2"
+            className="text-2xl leading-8 text-ui-fg-base font-normal mb-4"
           >
-            For Thursday 6th March Pickup
+            Ordering Now Open For Thursday 6th March Pickup
           </Heading>
-          <Text>
-            8:30am-10am and 5pm-6pm from the Karori Community Centre
+          <Text className="text-lg">
+            Choose your preferred pickup location below to get started
           </Text>
-        </span>
-        <a
-          href="https://karori.coshop.nz/nz/store"
-        >
-          <Button variant="secondary">
-            Order Here
-          </Button>
-        </a>
+        </div>
+        
+        {pickupLocation && (
+          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 max-w-md">
+            <Text className="font-medium">Your selected pickup location:</Text>
+            <Text className="text-lg font-bold mb-2">{pickupLocation}</Text>
+            <Text className="text-sm text-gray-600 mb-3">8:30am-10am and 5pm-6pm on Thursday</Text>
+            <Button 
+              variant="secondary"
+              onClick={() => router.push("/nz/store")}
+              className="min-w-[200px]"
+            >
+              Continue Shopping
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   )
