@@ -28,71 +28,85 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
   }
 
   return (
-    <div className="my-12 mx-auto max-w-2xl p-6 bg-white rounded-lg shadow-md">
-      <Heading level="h2" className="text-xl mb-4 text-center">
-        Choose Your Pickup Location
-      </Heading>
-      
-      <Text className="text-center mb-6">
-        Select where you would like to pick up your order on Thursday
-      </Text>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        <div 
-          className={`border rounded-lg p-4 cursor-pointer transition-colors ${
-            selectedLocation === "Central Park Flats" 
-              ? "border-2 border-blue-500 bg-blue-50" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-          onClick={() => handleLocationSelect("Central Park Flats")}
-        >
-          <Heading level="h3" className="text-lg mb-2">
-            Central Park Flats
-          </Heading>
-          <Text className="text-sm text-gray-600">
-            Located in central Wellington, convenient for city workers.
-          </Text>
-          <Text className="text-sm font-medium mt-2">
-            Pickup times: 8:30am-10am and 5pm-6pm
-          </Text>
-        </div>
-
-        <div 
-          className={`border rounded-lg p-4 cursor-pointer transition-colors ${
-            selectedLocation === "Karori Community Center" 
-              ? "border-2 border-blue-500 bg-blue-50" 
-              : "border-gray-200 hover:border-gray-300"
-          }`}
-          onClick={() => handleLocationSelect("Karori Community Center")}
-        >
-          <Heading level="h3" className="text-lg mb-2">
-            Karori Community Center
-          </Heading>
-          <Text className="text-sm text-gray-600">
-            Located in Karori, perfect for local residents.
-          </Text>
-          <Text className="text-sm font-medium mt-2">
-            Pickup times: 8:30am-10am and 5pm-6pm
-          </Text>
-        </div>
-      </div>
-
-      {selectedLocation && (
-        <div className="flex justify-center">
-          <Button 
-            onClick={handleContinue}
-            className="min-w-[200px]"
-          >
-            Continue to Store
-          </Button>
-        </div>
-      )}
-
-      {!selectedLocation && (
-        <Text className="text-center text-gray-500 italic">
-          Please select a pickup location to continue
+    <div className="container mx-auto max-w-2xl px-4">
+      <div className="text-center mb-10">
+        <Heading level="h1" className="text-3xl lg:text-4xl font-bold mb-4">
+          Hauora Kai Karori
+        </Heading>
+        <Text className="text-lg mb-2">
+          Community-run food coop with pickups every Thursday
         </Text>
-      )}
+        <Text className="text-md text-gray-600">
+          Ordering is now open for Thursday 6th March pickup
+        </Text>
+      </div>
+      
+      <div className="bg-white rounded-lg shadow-md p-8 border border-gray-100">
+        <Heading level="h2" className="text-2xl mb-6 text-center">
+          Choose Your Pickup Location
+        </Heading>
+        
+        <Text className="text-center mb-8">
+          Select where you would like to pick up your order on Thursday
+        </Text>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div 
+            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
+              selectedLocation === "Central Park Flats" 
+                ? "border-2 border-blue-500 bg-blue-50" 
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+            onClick={() => handleLocationSelect("Central Park Flats")}
+          >
+            <Heading level="h3" className="text-xl mb-3">
+              Central Park Flats
+            </Heading>
+            <Text className="text-gray-600 mb-3">
+              Located in central Wellington, convenient for city workers.
+            </Text>
+            <Text className="font-medium">
+              Pickup times: 8:30am-10am and 5pm-6pm
+            </Text>
+          </div>
+
+          <div 
+            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
+              selectedLocation === "Karori Community Center" 
+                ? "border-2 border-blue-500 bg-blue-50" 
+                : "border-gray-200 hover:border-gray-300"
+            }`}
+            onClick={() => handleLocationSelect("Karori Community Center")}
+          >
+            <Heading level="h3" className="text-xl mb-3">
+              Karori Community Center
+            </Heading>
+            <Text className="text-gray-600 mb-3">
+              Located in Karori, perfect for local residents.
+            </Text>
+            <Text className="font-medium">
+              Pickup times: 8:30am-10am and 5pm-6pm
+            </Text>
+          </div>
+        </div>
+
+        {selectedLocation && (
+          <div className="flex justify-center mt-8">
+            <Button 
+              onClick={handleContinue}
+              className="min-w-[200px] py-3 text-lg"
+            >
+              Continue to Store
+            </Button>
+          </div>
+        )}
+
+        {!selectedLocation && (
+          <Text className="text-center text-gray-500 italic mt-6">
+            Please select a pickup location to continue
+          </Text>
+        )}
+      </div>
     </div>
   )
 }

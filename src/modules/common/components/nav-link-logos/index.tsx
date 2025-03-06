@@ -4,9 +4,9 @@ import Image from "next/image"
 const NavLinkLogos = () => (
         <div>
           <LocalizedClientLink
-            href="/store"
+            href="/"
             className="flex flex-row items-center h-full uppercase gap-x-2 txt-compact-large-plus sm:txt-compact-xlarge-plus hover:text-ui-fg-base"
-            data-testid="nav-store-link"
+            data-testid="nav-home-link"
           >
             {/* TODO delete coshop from header if not required */}
             {/* <div className="flex flex-row items-center gap-x-1">

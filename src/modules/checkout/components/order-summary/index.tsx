@@ -56,9 +56,6 @@ const OrderSummary = ({ cart, pickupLocation }: OrderSummaryProps) => {
         <Text className="text-sm text-gray-600 mt-1">
           Thursday pickup times: 8:30am-10am and 5pm-6pm
         </Text>
-        <Text className="text-xs text-gray-500 italic mt-2">
-          ⚠️ Orders not picked up by 6pm will be donated to the Pataka Kai
-        </Text>
       </div>
       
       {/* Totals */}

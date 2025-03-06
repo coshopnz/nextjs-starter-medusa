@@ -16,7 +16,6 @@ const Review = ({
   cart: Omit<Cart, "refundable_amount" | "refunded_total">
 }) => {
   const searchParams = useSearchParams()
-  const [pickupConfirmed, setPickupConfirmed] = useState(false)
   const { pickupLocation, setPickupLocation } = useCheckout()
   const [previousLocation, setPreviousLocation] = useState<string | null>(null)
   const { pickupLocation: globalPickupLocation } = usePickupLocation()
@@ -89,7 +88,7 @@ const Review = ({
           {/* Order Details Summary */}
           <div className="mb-6 p-4 border rounded-lg bg-gray-50">
             <Heading level="h3" className="text-lg mb-2">
-              Order Details
+              Order Summary
             </Heading>
             
             {/* Pickup Location Review Section */}
@@ -213,25 +212,6 @@ const Review = ({
                       </Text>
                     )}
                   </div>
-                  
-                  <div className="mt-4 p-4 border rounded-lg">
-                    <Text className="font-medium mb-2">Pickup Policy:</Text>
-                    <Text className="mb-3">
-                      Information to complete your bank transfer will show once your order has been placed.
-                    </Text>
-                    <div className="flex items-center gap-x-2 mt-2">
-                      <input
-                        type="checkbox"
-                        id="pickup-confirmation"
-                        checked={pickupConfirmed}
-                        onChange={(e) => setPickupConfirmed(e.target.checked)}
-                        className="h-4 w-4 rounded border-gray-300"
-                      />
-                      <label htmlFor="pickup-confirmation" className="text-base text-gray-700">
-                        ⚠️ I understand that if I fail to pick up my order by 6pm, my order will be donated to the Pataka Kai and no refund will be given.
-                      </label>
-                    </div>
-                  </div>
                 </>
               ) : (
                 <Text className="mb-1 txt-medium-plus text-ui-fg-error">
@@ -246,7 +226,7 @@ const Review = ({
             </div>
           </div>
           
-          {isOrderTotalValid && pickupConfirmed && pickupLocation !== "" && (
+          {isOrderTotalValid && pickupLocation !== "" && (
             <div className="flex justify-center mt-6">
               <PaymentButton cart={cart} data-testid="submit-order-button" />
             </div>
