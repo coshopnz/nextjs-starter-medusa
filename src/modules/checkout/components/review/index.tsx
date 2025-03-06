@@ -85,39 +85,142 @@ const Review = ({
       </div>
       {isOpen && previousStepsCompleted && (
         <>
-          {/* Order Details Summary */}
-          <div className="mb-6 p-4 border rounded-lg bg-gray-50">
-            <Heading level="h3" className="text-lg mb-2">
+          {/* Order Summary */}
+          <div className="mb-6 p-6 border rounded-lg bg-gray-50">
+            <Heading level="h3" className="text-xl mb-4 pb-3 border-b">
               Order Summary
             </Heading>
             
-            {/* Pickup Location Review Section */}
-            <div className="mb-4">
-              <Text className="font-medium text-gray-700">Pickup Location:</Text>
-              {pickupLocation ? (
-                <div className="mt-1 flex items-center">
-                  <div className="bg-green-50 text-green-800 px-3 py-1 rounded-full text-sm font-medium mr-2">
-                    ✓ Selected
+            {/* Pickup Location Section */}
+            <div className="mb-6 pb-4 border-b">
+              <div className="flex justify-between items-center mb-3">
+                <Text className="font-medium text-gray-700">Select Pickup Location:</Text>
+                {pickupLocation ? (
+                  <div className="flex items-center">
+                    <div className="bg-green-50 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                      ✓ Location Selected
+                    </div>
                   </div>
-                  <Text className="font-bold">{pickupLocation}</Text>
-                </div>
-              ) : (
-                <div className="mt-1 flex items-center">
-                  <div className="bg-red-50 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-2">
-                    Required
+                ) : (
+                  <div className="flex items-center">
+                    <div className="bg-red-50 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+                      Required
+                    </div>
                   </div>
-                  <Text>No pickup location selected</Text>
+                )}
+              </div>
+              
+              {/* Previously selected location */}
+              {previousLocation && !pickupLocation && (
+                <div className="mb-3 p-3 bg-white rounded-md border">
+                  <Text className="text-sm">
+                    You previously selected <strong>{previousLocation}</strong> as your pickup location.
+                  </Text>
+                  <button
+                    onClick={handleUsePreviousLocation}
+                    className="text-sm text-blue-600 hover:text-blue-800 font-medium mt-1"
+                    type="button"
+                  >
+                    Use this location again
+                  </button>
                 </div>
               )}
-              <Text className="text-xs text-gray-500 mt-1">
-                Thursday pickup times: 8:30am-10am and 5pm-6pm
-              </Text>
+              
+              {/* Button-style location selectors */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
+                <button
+                  type="button"
+                  onClick={() => setPickupLocation("Central Park Flats")}
+                  className={`p-4 rounded-md border transition-colors ${
+                    pickupLocation === "Central Park Flats"
+                      ? "border-2 border-blue-500 bg-blue-50"
+                      : "border-gray-200 hover:border-gray-300 bg-white"
+                  }`}
+                  data-testid="pickup-location-central-park"
+                >
+                  <div className="flex items-start">
+                    <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
+                      pickupLocation === "Central Park Flats"
+                        ? "bg-blue-500"
+                        : "bg-gray-200"
+                    }`}></div>
+                    <div className="text-left">
+                      <Text className="font-medium">Central Park Flats</Text>
+                      <Text className="text-sm text-gray-600">
+                        Thursday pickup: 8:30am-10am and 5pm-6pm
+                      </Text>
+                    </div>
+                  </div>
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={() => setPickupLocation("Karori Community Center")}
+                  className={`p-4 rounded-md border transition-colors ${
+                    pickupLocation === "Karori Community Center"
+                      ? "border-2 border-blue-500 bg-blue-50"
+                      : "border-gray-200 hover:border-gray-300 bg-white"
+                  }`}
+                  data-testid="pickup-location-karori"
+                >
+                  <div className="flex items-start">
+                    <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
+                      pickupLocation === "Karori Community Center"
+                        ? "bg-blue-500"
+                        : "bg-gray-200"
+                    }`}></div>
+                    <div className="text-left">
+                      <Text className="font-medium">Karori Community Center</Text>
+                      <Text className="text-sm text-gray-600">
+                        Thursday pickup: 5pm-6pm only
+                      </Text>
+                    </div>
+                  </div>
+                </button>
+              </div>
+              
+              {/* Display pickup time based on selected location */}
+              {pickupLocation && (
+                <Text className="text-sm text-gray-600 mt-2">
+                  {pickupLocation === "Central Park Flats" 
+                    ? "Thursday pickup times: 8:30am-10am and 5pm-6pm" 
+                    : "Thursday pickup time: 5pm-6pm only"}
+                </Text>
+              )}
+              
+              {isOpen && pickupLocation === "" && (
+                <Text className="mt-2 text-sm text-ui-fg-error">
+                  Please select a pickup location
+                </Text>
+              )}
             </div>
+            
+            {/* Items Summary */}
+            {cart.items.length > 0 && (
+              <div className="mb-6 pb-4 border-b">
+                <Text className="font-medium text-gray-700 mb-3">Items</Text>
+                <ul className="divide-y">
+                  {cart.items.map((item) => (
+                    <li key={item.id} className="py-2 flex justify-between">
+                      <div>
+                        <Text className="font-medium">{item.title}</Text>
+                        <Text className="text-sm text-gray-500">
+                          Quantity: {item.quantity}
+                        </Text>
+                      </div>
+                      <Text className="font-medium">
+                        ${((item.total || 0) / 100).toFixed(2)}
+                      </Text>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             
             {/* Customer Details */}
             {cart.shipping_address && (
-              <div className="mb-4">
-                <Text className="font-medium text-gray-700">Customer:</Text>
+              <div className="mb-6 pb-4 border-b">
+                <Text className="font-medium text-gray-700 mb-2">Customer:</Text>
                 <Text>
                   {cart.shipping_address.first_name} {cart.shipping_address.last_name}
                 </Text>
@@ -126,8 +229,8 @@ const Review = ({
             )}
             
             {/* Payment Method */}
-            <div>
-              <Text className="font-medium text-gray-700">Payment Method:</Text>
+            <div className="mb-6 pb-4 border-b">
+              <Text className="font-medium text-gray-700 mb-2">Payment Method:</Text>
               <Text>
                 {isManualPayment 
                   ? "Bank Transfer (details provided after order placement)" 
@@ -138,91 +241,35 @@ const Review = ({
                       : "Other"}
               </Text>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            <div className="w-full">
-              {isOrderTotalValid ? (
-                <>
-                  <Text className="mb-4 txt-medium-plus text-ui-fg-base font-normal">
-                    Please select your pickup location and confirm the notice below before placing your order.
-                  </Text>
-                  
-                  {/* Pickup Location Selection */}
-                  <div className="my-4 p-4 border rounded-lg">
-                    <Text className="mb-2 font-medium">Select Pickup Location:</Text>
-                    
-                    {/* Show previously selected location for logged-in customer */}
-                    {previousLocation && !pickupLocation && (
-                      <div className="mb-3 p-3 bg-gray-50 rounded-md">
-                        <Text className="text-sm">
-                          You previously selected <strong>{previousLocation}</strong> as your pickup location.
-                        </Text>
-                        <button
-                          onClick={handleUsePreviousLocation}
-                          className="text-sm text-blue-600 hover:text-blue-800 font-medium mt-1"
-                          type="button"
-                        >
-                          Use this location again
-                        </button>
-                      </div>
-                    )}
-                    
-                    <div className="flex flex-col gap-y-2">
-                      <div className="flex items-center gap-x-2">
-                        <input
-                          type="radio"
-                          id="location-central-park"
-                          name="pickup-location"
-                          value="Central Park Flats"
-                          checked={pickupLocation === "Central Park Flats"}
-                          onChange={(e) => setPickupLocation(e.target.value)}
-                          className="h-4 w-4"
-                          data-testid="pickup-location-central-park"
-                        />
-                        <label htmlFor="location-central-park" className="text-base text-gray-700">
-                          Central Park Flats
-                        </label>
-                      </div>
-                      <div className="flex items-center gap-x-2">
-                        <input
-                          type="radio"
-                          id="location-karori"
-                          name="pickup-location"
-                          value="Karori Community Center"
-                          checked={pickupLocation === "Karori Community Center"}
-                          onChange={(e) => setPickupLocation(e.target.value)}
-                          className="h-4 w-4"
-                          data-testid="pickup-location-karori"
-                        />
-                        <label htmlFor="location-karori" className="text-base text-gray-700">
-                          Karori Community Center
-                        </label>
-                      </div>
-                    </div>
-                    {pickupLocation && (
-                      <Text className="mt-2 text-sm text-ui-fg-base">
-                        Your pickup location ({pickupLocation}) will be stored with your order details.
-                        {cart.customer?.has_account && " It will also be saved for future orders."}
-                      </Text>
-                    )}
-                    {isOpen && pickupLocation === "" && (
-                      <Text className="mt-1 text-sm text-ui-fg-error">
-                        Please select a pickup location
-                      </Text>
-                    )}
-                  </div>
-                </>
-              ) : (
-                <Text className="mb-1 txt-medium-plus text-ui-fg-error">
-                  Minimum order amount is $10. Please add more items to your cart.
-                </Text>
-              )}
-            </div>
             
-            {/* Order Summary */}
+            {/* Totals */}
             <div>
-              {pickupLocation && <OrderSummary cart={cart} pickupLocation={pickupLocation} />}
+              <div className="flex items-center justify-between mb-1">
+                <Text>Subtotal</Text>
+                <Text className="font-medium">${((cart.subtotal || 0) / 100).toFixed(2)}</Text>
+              </div>
+              
+              {cart.discounts.length > 0 && (
+                <div className="flex items-center justify-between mb-1 text-green-600">
+                  <Text>Discounts</Text>
+                  <Text>- ${((cart.discount_total || 0) / 100).toFixed(2)}</Text>
+                </div>
+              )}
+              
+              <div className="flex items-center justify-between mb-1">
+                <Text>Shipping</Text>
+                <Text>${((cart.shipping_total || 0) / 100).toFixed(2)}</Text>
+              </div>
+              
+              <div className="flex items-center justify-between mb-1">
+                <Text>Tax</Text>
+                <Text>${((cart.tax_total || 0) / 100).toFixed(2)}</Text>
+              </div>
+              
+              <div className="flex items-center justify-between border-t mt-2 pt-2">
+                <Text className="font-bold">Total</Text>
+                <Text className="font-bold">${((cart.total || 0) / 100).toFixed(2)}</Text>
+              </div>
             </div>
           </div>
           
