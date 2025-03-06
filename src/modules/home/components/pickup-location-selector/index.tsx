@@ -4,6 +4,13 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button, Heading, Text } from "@medusajs/ui"
 import { usePickupLocation } from "@lib/context/pickup-location-context"
+import dynamic from "next/dynamic"
+
+// Import the LocationMap component dynamically with no SSR to avoid Leaflet issues
+const LocationMap = dynamic(
+  () => import("../location-map"),
+  { ssr: false }
+)
 
 const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
   const { pickupLocation, setPickupLocation } = usePickupLocation()
@@ -31,10 +38,10 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
     <div className="container mx-auto max-w-2xl px-4">
       <div className="text-center mb-10">
         <Heading level="h1" className="text-3xl lg:text-4xl font-bold mb-4">
-          Hauora Kai Karori
+          Hauora Kai
         </Heading>
         <Text className="text-lg mb-2">
-          Community-run food coop with pickups every Thursday
+          A Community-run food network with local pickups every week.
         </Text>
         <Text className="text-md text-gray-600">
           Ordering is now open for Thursday 6th March pickup
@@ -53,21 +60,22 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div 
             className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
-              selectedLocation === "Central Park Flats" 
+              selectedLocation === "Central Park Apartments Community Room" 
                 ? "border-2 border-blue-500 bg-blue-50" 
                 : "border-gray-200 hover:border-gray-300"
             }`}
-            onClick={() => handleLocationSelect("Central Park Flats")}
+            onClick={() => handleLocationSelect("Central Park Apartments Community Room")}
           >
             <Heading level="h3" className="text-xl mb-3">
-              Central Park Flats
+              Central Park Apartments Community Room
             </Heading>
             <Text className="text-gray-600 mb-3">
-              Located in central Wellington, convenient for city workers.
+              Located in Mount Cook, Wellington, close to the CBD.
             </Text>
-            <Text className="font-medium">
+            <Text className="font-medium mb-4">
               Pickup times: 8:30am-10am and 5pm-6pm
             </Text>
+            <LocationMap locationName="Central Park Apartments Community Room" height="180px" />
           </div>
 
           <div 
@@ -84,9 +92,10 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
             <Text className="text-gray-600 mb-3">
               Located in Karori, perfect for local residents.
             </Text>
-            <Text className="font-medium">
-              Pickup times: 8:30am-10am and 5pm-6pm
+            <Text className="font-medium mb-4">
+              Pickup time: 5pm-6pm
             </Text>
+            <LocationMap locationName="Karori Community Center" height="180px" />
           </div>
         </div>
 

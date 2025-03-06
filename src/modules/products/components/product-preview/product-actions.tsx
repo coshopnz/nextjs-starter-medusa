@@ -46,7 +46,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
         <CartItemSelect
           value={quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
-          className="h-8 w-16 text-sm"
+          className="h-10 w-14 flex-shrink-0"
         >
           {Array.from(
             { length: Math.min(inStock ? inventoryQuantity : 10, 10) },
@@ -58,7 +58,7 @@ export default function ProductActions({ product, region }: ProductActionsProps)
           )}
         </CartItemSelect>
         <Button
-          className="h-8 text-sm px-3 w-24"
+          className="h-10 text-sm px-4 min-w-[100px] font-medium"
           variant="primary"
           onClick={handleAddToCart}
           disabled={!inStock || isAdding}

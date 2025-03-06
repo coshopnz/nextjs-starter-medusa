@@ -36,7 +36,7 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
       
       {isManualPayment && (
         <Text className="mb-4 font-medium">
-          Once your payment is received, your food bag(s) will be ready for pickup:
+          Once your payment is received, your order will be ready for pickup at the following location and times:
         </Text>
       )}
       
@@ -58,12 +58,12 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
             <ul className="list-disc ml-5 mt-1">
               <li>
                 <Text className="text-sm">
-                  Please bring your order confirmation or ID when collecting.
+                  Please note your order number for reference when collecting: #{order.display_id}
                 </Text>
               </li>
               <li>
                 <Text className="text-sm">
-                  Order #{order.display_id}
+                  You will need to bring a bag or container to collect your order.
                 </Text>
               </li>
             </ul>

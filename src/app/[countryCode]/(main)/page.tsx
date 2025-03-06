@@ -2,31 +2,30 @@ import { Product } from "@medusajs/medusa"
 import { Metadata } from "next"
 
 import { getCollectionsList, getProductsList, getRegion } from "@lib/data"
-import FeaturedProducts from "@modules/home/components/featured-products"
 import PickupLocationSelector from "@modules/home/components/pickup-location-selector"
 import { ProductCollectionWithPreviews } from "types/global"
 import { cache } from "react"
 
 export const metadata: Metadata = {
-  title: "Hauora Kai Karori",
+  title: "Hauora Kai",
   description:
-    "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+    "A Community-run food network with local pickups every week.",
   openGraph: {
-    title: "Hauora Kai Karori",
-    description: "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+    title: "Hauora Kai",
+    description: "A Community-run food network with local pickups every week.",
     images: [
       {
         url: "/coop-img.jpg", // Replace with your image path
         width: 1300,
         height: 1289,
-        alt: "Hauora Kai Karori",
+        alt: "Hauora Kai",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hauora Kai Karori",
-    description: "A community-run food coop with pickups every Thursday at the Karori Community Centre.",
+    title: "Hauora Kai",
+    description: "A Community-run food network with local pickups every week.",
     images: ["/coop-img.jpg"], // Replace with your image path
   },
 }
