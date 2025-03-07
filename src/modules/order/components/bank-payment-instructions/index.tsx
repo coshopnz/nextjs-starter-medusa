@@ -22,8 +22,8 @@ const BankPaymentInstructions: React.FC<BankPaymentInstructionsProps> = ({ order
         Bank payment instructions
       </Heading>
       <Text className="mb-2">
-        Thanks for using our platform! You are one step away from completing your order!
-        The final step is to manually transfer us the money. You can find the transfer details below.
+        Thanks for using our platform! You are one step away from completing your order.
+        The final step is to manually transfer money into our bank account. You can find the transfer details below.
         Please put the <span className="font-semibold">order number #<span data-testid="order-id">{order.display_id}</span></span> in the reference field.
       </Text>
     
