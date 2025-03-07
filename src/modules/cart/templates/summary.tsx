@@ -16,14 +16,14 @@ const Summary = ({ cart }: SummaryProps) => {
   const isOrderTotalValid = (cart.total ?? 0) >= 1000
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="flex flex-col gap-y-6">
       <Heading level="h2" className="text-[2rem] leading-[2.75rem]">
         Summary
       </Heading>
       <Divider />
       <CartTotals data={cart} />
       {!isOrderTotalValid && (
-        <div className="text-rose-500 text-small-regular">
+        <div className="text-rose-500 text-small-regular mb-2">
           Minimum order amount is $10
         </div>
       )}
@@ -33,7 +33,7 @@ const Summary = ({ cart }: SummaryProps) => {
         data-testid="checkout-button"
       >
         <Button 
-          className="w-full h-10" 
+          className="w-full h-12 text-base font-medium" 
           disabled={!isOrderTotalValid}
         >
           Go to checkout
