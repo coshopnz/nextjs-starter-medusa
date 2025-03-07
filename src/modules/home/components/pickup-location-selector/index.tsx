@@ -37,14 +37,8 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
   return (
     <div className="container mx-auto max-w-2xl px-4">
       <div className="text-center mb-10">
-        <Heading level="h1" className="text-3xl lg:text-4xl font-bold mb-4">
-          Hauora Kai
-        </Heading>
         <Text className="text-lg mb-2">
           A Community-run food network with local pickups every week.
-        </Text>
-        <Text className="text-md text-gray-600">
-          Ordering is now open for Thursday 6th March pickup
         </Text>
       </div>
       
@@ -54,7 +48,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
         </Heading>
         
         <Text className="text-center mb-8">
-          Select where you would like to pick up your order on Thursday
+          Select where you would like to pick up your order on Thursday the 11th of March
         </Text>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

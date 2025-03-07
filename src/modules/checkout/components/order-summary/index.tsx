@@ -54,7 +54,7 @@ const OrderSummary = ({ cart, pickupLocation }: OrderSummaryProps) => {
           <Text className="font-bold">{pickupLocation}</Text>
         </div>
         <Text className="text-sm text-gray-600 mt-1">
-          Thursday pickup times: 8:30am-10am and 5pm-6pm
+          Thursday pickup times: 10am-12pm and 5pm-6pm
         </Text>
       </div>
       

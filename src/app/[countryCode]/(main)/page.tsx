@@ -7,7 +7,7 @@ import { ProductCollectionWithPreviews } from "types/global"
 import { cache } from "react"
 
 export const metadata: Metadata = {
-  title: "Hauora Kai",
+  title: "Hauora Kai powered by CoShop",
   description:
     "A Community-run food network with local pickups every week.",
   openGraph: {
@@ -18,13 +18,13 @@ export const metadata: Metadata = {
         url: "/coop-img.jpg", // Replace with your image path
         width: 1300,
         height: 1289,
-        alt: "Hauora Kai",
+        alt: "Hauora Kai powered by CoShop",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hauora Kai",
+    title: "Hauora Kai powered by CoShop",
     description: "A Community-run food network with local pickups every week.",
     images: ["/coop-img.jpg"], // Replace with your image path
   },

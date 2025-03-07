@@ -147,7 +147,7 @@ const Review = ({
                     <div className="text-left">
                       <Text className="font-medium">Central Park Apartments Community Room</Text>
                       <Text className="text-sm text-gray-600">
-                        Thursday pickup: 8:30am-10am and 5pm-6pm
+                        Thursday pickup: 10am-12pm and 5pm-6pm
                       </Text>
                     </div>
                   </div>
@@ -183,7 +183,7 @@ const Review = ({
               {pickupLocation && (
                 <Text className="text-sm text-gray-600 mt-2">
                   {pickupLocation === "Central Park Apartments Community Room" 
-                    ? "Thursday pickup times: 8:30am-10am and 5pm-6pm" 
+                    ? "Thursday pickup times: 10am-12pm and 5pm-6pm" 
                     : "Thursday pickup time: 5pm-6pm only"}
                 </Text>
               )}
