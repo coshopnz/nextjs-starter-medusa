@@ -33,15 +33,17 @@ if (isManualPayment === undefined) {
 if (isManualPayment) {
   return (
     <>
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-6">
         <Heading
           level="h1"
-          className="flex flex-col mb-3 text-3xl gap-y-3 text-ui-fg-base"
+          className="flex flex-col mb-4 text-3xl gap-y-3 text-ui-fg-base"
         >
           <span>Almost there!</span>
           <span>😊 🥦</span>
         </Heading>
-        <BankPaymentInstructions order={order} />
+        <div className="p-6 bg-gray-50 rounded-lg">
+          <BankPaymentInstructions order={order} />
+        </div>
         <PickUpInfo order={order} />
       </div>
     </>
@@ -50,15 +52,17 @@ if (isManualPayment) {
 
 // if payment is stripe, order is succesful, show order details and pick up info
 return (
-  <div>
+  <div className="flex flex-col gap-y-6">
     <Heading
       level="h1"
-      className="flex flex-col mb-3 text-3xl gap-y-3 text-ui-fg-base"
+      className="flex flex-col mb-4 text-3xl gap-y-3 text-ui-fg-base"
     >
       <span>Thank you!</span>
       <span className="flex flex-col text-xl text-ui-fg-base">Your order was placed successfully.</span>
     </Heading>
-    <OrderDetails order={order} />
+    <div className="p-6 bg-gray-50 rounded-lg">
+      <OrderDetails order={order} />
+    </div>
     <PickUpInfo order={order} />
   </div>
 );

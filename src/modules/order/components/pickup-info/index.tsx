@@ -29,7 +29,7 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
   }
 
   return (
-    <div className="mt-8 border-t pt-6">
+    <div className="p-6 bg-gray-50 rounded-lg shadow-sm">
       <Heading level="h2" className="text-2xl-regular mb-4">
         Pickup Information
       </Heading>
@@ -40,24 +40,26 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
         </Text>
       )}
       
-      <div className="bg-green-50 p-4 rounded-lg mb-4 border border-green-100">
-        <div className="flex items-center mb-3">
-          <div className="h-5 w-5 rounded-full bg-green-500 mr-2"></div>
+      <div className="bg-green-50 p-6 rounded-lg mb-4 border border-green-100">
+        <div className="flex items-center mb-4">
+          <div className="h-6 w-6 rounded-full bg-green-500 mr-3 flex items-center justify-center">
+            <span className="text-white text-sm">✓</span>
+          </div>
           <Text className="font-medium text-lg">Location: {pickupLocation}</Text>
         </div>
-        <div className="flex items-center mb-3">
-          <div className="w-5 mr-2 flex justify-center">📅</div>
+        <div className="flex items-center mb-4">
+          <div className="w-6 mr-3 flex justify-center">📅</div>
           <Text className="font-medium">
             Time: {pickupTime}
           </Text>
         </div>
         <div className="flex items-start">
-          <div className="w-5 mr-2 flex justify-center mt-1">📝</div>
+          <div className="w-6 mr-3 flex justify-center mt-1">📝</div>
           <div>
             <Text className="font-medium">Important:</Text>
-            <ul className="list-disc ml-5 mt-1">
+            <ul className="list-disc ml-5 mt-2">
               <li>
-                <Text className="text-sm">
+                <Text className="text-sm mb-2">
                   Please note your order number for reference when collecting: #{order.display_id}
                 </Text>
               </li>
@@ -70,11 +72,11 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
           </div>
         </div>
       </div>
-      <Text className="text-ui-fg-subtle text-sm font-medium">
+      <Text className="text-ui-fg-subtle text-sm font-medium p-3 bg-amber-50 rounded-lg border border-amber-100">
         ⚠️ If you fail to pick up your order during the scheduled time, it will be donated to the Pataka Kai.
       </Text>
     </div>
   )
 }
 
-export default PickUpInfo 
+export default PickUpInfo

@@ -20,19 +20,32 @@ export default function OrderCompletedTemplate({
   const isOnboarding = cookies().get("_medusa_onboarding")?.value === "true"
 
   return (
-    <div className="py-6 min-h-[calc(100vh-64px)]">
+    <div className="py-14 min-h-[calc(100vh-64px)]">
       <div className="flex flex-col items-center justify-center w-full h-full max-w-4xl content-container gap-y-10">
         {isOnboarding && <OnboardingCta orderId={order.id} />}
-        <div className="flex flex-col w-full h-full max-w-4xl gap-4 py-10 bg-white" data-testid="order-complete-container">
+        <div className="flex flex-col w-full h-full max-w-4xl gap-6 p-8 bg-white rounded-lg shadow-sm" data-testid="order-complete-container">
           <OrderConfirmationDetails order={order} />
 
-          <Heading level="h2" className="flex flex-row mt-4 text-2xl-regular">
-            Order summary
-          </Heading>
-          <Items items={order.items} region={order.region} />
-          <CartTotals data={order} />
-          <ShippingDetails order={order} />
-          <PaymentDetails order={order} />
+          <div className="mt-2">
+            <Heading level="h2" className="flex flex-row mb-4 text-2xl-regular">
+              Order summary
+            </Heading>
+            <Items items={order.items} region={order.region} />
+          </div>
+          
+          <div className="p-6 bg-gray-50 rounded-lg mt-2">
+            <CartTotals data={order} />
+          </div>
+          
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div className="p-6 bg-gray-50 rounded-lg">
+              <ShippingDetails order={order} />
+            </div>
+            <div className="p-6 bg-gray-50 rounded-lg">
+              <PaymentDetails order={order} />
+            </div>
+          </div>
+          
           <Help />
         </div>
       </div>
