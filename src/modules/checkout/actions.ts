@@ -8,6 +8,9 @@ import {
   deleteDiscount,
   setPaymentSession,
   updateCart,
+  getCart,
+  getCustomer,
+  updateCustomer,
 } from "@lib/data"
 import { GiftCard, StorePostCartsCartReq } from "@medusajs/medusa"
 import { revalidateTag } from "next/cache"
@@ -173,7 +176,7 @@ export async function setPaymentMethod(providerId: string) {
 }
 
 // this action is called when the user clicks the "Place Order" button to finalise the checkout process and redirect the user to the checkout page
-export async function placeOrder() {
+export async function placeOrder(pickupLocation?: string) {
   const cartId = cookies().get("_medusa_cart_id")?.value
 
   if (!cartId) throw new Error("No cartId cookie found")
@@ -181,6 +184,62 @@ export async function placeOrder() {
   let cart
 
   try {
+    // First, get the current cart to check if there's a customer associated with it
+    const currentCart = await getCart(cartId)
+    
+    // Handle pickup location if provided
+    if (pickupLocation) {
+      // For customers with accounts, store in customer metadata for future reference
+      if (currentCart && currentCart.customer && currentCart.customer.has_account) {
+        try {
+          const customer = await getCustomer()
+          if (customer) {
+            // Update customer metadata with pickup location
+            await updateCustomer({
+              metadata: {
+                ...(customer.metadata || {}),
+                pickup_location: pickupLocation,
+                last_updated: new Date().toISOString()
+              }
+            })
+            
+            console.log("Stored pickup location in customer metadata for future use")
+          }
+        } catch (error) {
+          console.error("Error updating customer metadata:", error)
+        }
+      }
+      
+      // For all users, store pickup location in the shipping address
+      // This ensures the information is transferred to the order
+      if (currentCart && currentCart.shipping_address) {
+        // Extract only the allowed fields from shipping address and update address_2
+        // This prevents sending internal properties that aren't allowed in the API
+        const cleanAddress = {
+          first_name: currentCart.shipping_address.first_name,
+          last_name: currentCart.shipping_address.last_name,
+          address_1: currentCart.shipping_address.address_1,
+          address_2: `Pickup: ${pickupLocation}`,
+          city: currentCart.shipping_address.city,
+          country_code: currentCart.shipping_address.country_code,
+          postal_code: currentCart.shipping_address.postal_code,
+          phone: currentCart.shipping_address.phone,
+          province: currentCart.shipping_address.province,
+          company: currentCart.shipping_address.company
+        }
+        
+        await updateCart(cartId, {
+          shipping_address: cleanAddress
+        } as unknown as StorePostCartsCartReq)
+        
+        console.log("Stored pickup location in shipping address for order")
+      } else {
+        console.error("Cannot store pickup location: cart has no shipping address")
+      }
+    } else {
+      console.warn("No pickup location provided")
+    }
+
     // completeCart is a Medusa API endpoint that will finalise the cart and create an order or throw an error if the cart is not ready to be completed
     cart = await completeCart(cartId)
     revalidateTag("cart")

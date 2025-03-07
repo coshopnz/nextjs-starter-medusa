@@ -71,7 +71,7 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
             <CartItemSelect
               value={item.quantity}
               onChange={(value) => changeQuantity(parseInt(value.target.value))}
-              className="h-10 p-4 w-14"
+              className="h-10 w-14 flex-shrink-0"
               data-testid="product-select-button"
             >
               {Array.from(

@@ -1,4 +1,3 @@
-
 "use client"
 import { Order } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
@@ -9,7 +8,6 @@ type BankPaymentInstructionsProps = {
 }
 
 const BankPaymentInstructions: React.FC<BankPaymentInstructionsProps> = ({ order })  => {
-
   const getAmount = (amount: number | null | undefined) => {
     return formatAmount({
       amount: amount || 0,
@@ -34,8 +32,8 @@ const BankPaymentInstructions: React.FC<BankPaymentInstructionsProps> = ({ order
         <Text><span className="font-semibold">Account number:</span> 38-9025-0215033-00</Text>
         <Text><span className="font-semibold">Reference:</span> {order.display_id}</Text>
         <Text><span className="font-semibold">Amount due (incl GST):</span> {getAmount(order.total)}</Text>
-      <Text>NOTE: Your order is not ready until you have paid the amount due.</Text>
-      <Text>If you have any questions or feedback, reach out to <a className="underline" href="mailto:orders@coshop.nz">orders@coshop.nz</a></Text>
+        <Text><span className="font-semibold">NOTE:</span> Your order is not ready until you have paid the amount due.</Text>
+        <Text>If you have any questions or feedback, reach out to <a className="underline" href="mailto:orders@coshop.nz">orders@coshop.nz</a></Text>
       </div>
     </div>
   )

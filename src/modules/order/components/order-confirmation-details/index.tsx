@@ -2,8 +2,8 @@
 import { Order } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
 import OrderDetails from "../order-details"
-import PickUpInfo from "../pick-up-info"
 import Spinner from "@modules/common/icons/spinner"
+import PickUpInfo from "../pickup-info"
 
 import { useEffect, useState } from "react"
 import BankPaymentInstructions from "../bank-payment-instructions"
@@ -42,12 +42,13 @@ if (isManualPayment) {
           <span>😊 🥦</span>
         </Heading>
         <BankPaymentInstructions order={order} />
+        <PickUpInfo order={order} />
       </div>
     </>
   );
 }
 
-// if payment is  stripe, order is succesful, show order details and pick up info
+// if payment is stripe, order is succesful, show order details and pick up info
 return (
   <div>
     <Heading
