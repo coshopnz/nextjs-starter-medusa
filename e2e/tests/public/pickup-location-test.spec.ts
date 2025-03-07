@@ -36,7 +36,7 @@ test("Pickup location should be stored in shipping address", async ({ page }) =>
   // Skip product/line item addition for simplicity
   
   // Set pickup location in shipping address
-  const pickupLocation = "Central Park Flats"
+  const pickupLocation = "Central Park Apartments Community Room"
   
   // Add an email to the cart (required for some operations)
   console.log("Adding email to cart...")

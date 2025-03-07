@@ -130,9 +130,9 @@ const Review = ({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
                 <button
                   type="button"
-                  onClick={() => setPickupLocation("Central Park Flats")}
+                  onClick={() => setPickupLocation("Central Park Apartments Community Room")}
                   className={`p-4 rounded-md border transition-colors ${
-                    pickupLocation === "Central Park Flats"
+                    pickupLocation === "Central Park Apartments Community Room"
                       ? "border-2 border-blue-500 bg-blue-50"
                       : "border-gray-200 hover:border-gray-300 bg-white"
                   }`}
@@ -140,12 +140,12 @@ const Review = ({
                 >
                   <div className="flex items-start">
                     <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
-                      pickupLocation === "Central Park Flats"
+                      pickupLocation === "Central Park Apartments Community Room"
                         ? "bg-blue-500"
                         : "bg-gray-200"
                     }`}></div>
                     <div className="text-left">
-                      <Text className="font-medium">Central Park Flats</Text>
+                      <Text className="font-medium">Central Park Apartments Community Room</Text>
                       <Text className="text-sm text-gray-600">
                         Thursday pickup: 8:30am-10am and 5pm-6pm
                       </Text>
@@ -182,7 +182,7 @@ const Review = ({
               {/* Display pickup time based on selected location */}
               {pickupLocation && (
                 <Text className="text-sm text-gray-600 mt-2">
-                  {pickupLocation === "Central Park Flats" 
+                  {pickupLocation === "Central Park Apartments Community Room" 
                     ? "Thursday pickup times: 8:30am-10am and 5pm-6pm" 
                     : "Thursday pickup time: 5pm-6pm only"}
                 </Text>

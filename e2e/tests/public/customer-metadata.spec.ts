@@ -44,7 +44,7 @@ test("should update customer metadata with pickup location", async ({ request })
   // Step 3: Try to update customer metadata with pickup location
   console.log("Updating customer metadata with pickup location...")
   const metadata = {
-    pickup_location: "Central Park Flats",
+    pickup_location: "Central Park Apartments Community Room",
     pickup_preferences: {
       time_window: "morning",
       special_instructions: "Call upon arrival"
@@ -92,7 +92,7 @@ test("should update customer metadata with pickup location", async ({ request })
     
     // Verify the metadata contains our pickup location
     expect(customer.customer.metadata).toBeDefined()
-    expect(customer.customer.metadata.pickup_location).toBe("Central Park Flats")
+    expect(customer.customer.metadata.pickup_location).toBe("Central Park Apartments Community Room")
   } else {
     console.log("Failed to update customer metadata, this may not be supported in the Store API")
   }

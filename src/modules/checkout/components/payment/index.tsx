@@ -256,7 +256,7 @@ const Payment = ({
                   <Text>
                     {cart.payment_session.provider_id === "stripe" && cardBrand
                       ? cardBrand
-                      : "Please see order review for bank payment instructions"}
+                      : "Bank account details and payment instructions provided after order is placed."}
                   </Text>
                 </div>
               </div>

@@ -37,7 +37,7 @@ async function testGuestUserPickupLocation(request: APIRequestContext) {
   
   // Step 2: Simulate checkout process by setting pickup location in cart context
   console.log("Setting pickup location in cart context...")
-  const pickupLocation = "Central Park Flats"
+  const pickupLocation = "Central Park Apartments Community Room"
   
   const updateResponse = await request.post(`http://localhost:9000/store/carts/${cartId}`, {
     headers: {
