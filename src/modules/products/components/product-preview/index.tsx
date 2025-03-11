@@ -26,11 +26,15 @@ export default async function ProductPreview({
   }
 
   const getAmount = (amount: number | null | undefined) => {
-    return formatAmount({
+    const formattedPrice = formatAmount({
       amount: amount || 0,
       region: region,
       includeTaxes: false,
     })
+    
+    // Remove currency code but keep the dollar sign
+    // This will change e.g. "NZ$1.23" to "$1.23"
+    return formattedPrice.replace(/^[A-Z]{2,3}\$/, "$")
   }
 
   const priceInclGst = getAmount(pricedProduct.variants[0]?.original_price_incl_tax)
@@ -48,7 +52,7 @@ export default async function ProductPreview({
           </LocalizedClientLink>
         </div>
         <div className="flex flex-col mt-2">
-          <div className="flex justify-between items-center mb-1">
+          <div className="flex flex-col mb-1">
             <Text className="text-ui-fg-subtle font-medium" data-testid="product-title">{productPreview.title}</Text>
             <Text className="text-ui-fg-subtle font-medium">{priceInclGst}</Text>
           </div>
