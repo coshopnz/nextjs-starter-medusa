@@ -2,7 +2,7 @@
 
 import { usePathname, useParams } from "next/navigation"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import { ArrowRightMini } from "@medusajs/icons"
+import ChevronDown from "@modules/common/icons/chevron-down"
 import { Fragment } from "react"
 
 const Breadcrumb = () => {
@@ -83,7 +83,7 @@ const Breadcrumb = () => {
           <Fragment key={index}>
             {index > 0 && (
               <li className="flex items-center mx-1">
-                <ArrowRightMini className="w-4 h-4" />
+                <ChevronDown className="transform -rotate-90 w-4 h-4" />
               </li>
             )}
             <li>
