@@ -53,42 +53,46 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div 
-            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
+            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md flex flex-col ${
               selectedLocation === "Central Park Apartments Community Room" 
                 ? "border-2 border-blue-500 bg-blue-50" 
                 : "border-gray-200 hover:border-gray-300"
             }`}
             onClick={() => handleLocationSelect("Central Park Apartments Community Room")}
           >
-            <Heading level="h3" className="text-xl mb-3">
-              Central Park Apartments Community Room
-            </Heading>
-            <Text className="text-gray-600 mb-3">
-              Located in Mount Cook, Wellington, close to the CBD.
-            </Text>
-            <Text className="font-medium mb-4">
-              Pickup times: 8:30am-10am and 5pm-6pm
-            </Text>
+            <div className="flex-1">
+              <Heading level="h3" className="text-xl mb-3">
+                Central Park Apartments Community Room
+              </Heading>
+              <Text className="text-gray-600 mb-3">
+                Located in Mount Cook, Wellington, close to the CBD.
+              </Text>
+              <Text className="font-medium mb-4">
+                Pickup times: 8:30am-10am and 5pm-6pm
+              </Text>
+            </div>
             <LocationMap locationName="Central Park Apartments Community Room" height="180px" />
           </div>
 
           <div 
-            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
+            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md flex flex-col ${
               selectedLocation === "Karori Community Center" 
                 ? "border-2 border-blue-500 bg-blue-50" 
                 : "border-gray-200 hover:border-gray-300"
             }`}
             onClick={() => handleLocationSelect("Karori Community Center")}
           >
-            <Heading level="h3" className="text-xl mb-3">
-              Karori Community Center
-            </Heading>
-            <Text className="text-gray-600 mb-3">
-              Located in Karori, perfect for local residents.
-            </Text>
-            <Text className="font-medium mb-4">
-              Pickup time: 5pm-6pm
-            </Text>
+            <div className="flex-1">
+              <Heading level="h3" className="text-xl mb-3">
+                Karori Community Center
+              </Heading>
+              <Text className="text-gray-600 mb-3">
+                Located in Karori, perfect for local residents.
+              </Text>
+              <Text className="font-medium mb-4">
+                Pickup time: 5pm-6pm
+              </Text>
+            </div>
             <LocationMap locationName="Karori Community Center" height="180px" />
           </div>
         </div>
