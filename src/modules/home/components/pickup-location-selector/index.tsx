@@ -44,7 +44,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
       
       <div className="bg-white rounded-lg shadow-md p-8 border border-gray-100">
         <Heading level="h2" className="text-2xl mb-6 text-center">
-          Choose Your Pickup Location
+          Choose Your Hub
         </Heading>
         
         <Text className="text-center mb-8">
