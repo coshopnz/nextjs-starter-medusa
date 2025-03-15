@@ -36,7 +36,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
 
   return (
     <div className="container mx-auto max-w-2xl px-4">
-      <div className="text-center mb-10">
+      <div className="text-center mb-10 pt-8">
         <Text className="text-lg mb-2">
           A Community-run food network with local pickups every week.
         </Text>
