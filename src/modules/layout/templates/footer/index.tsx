@@ -25,7 +25,7 @@ export default async function Footer() {
           </div>
         <div className="flex justify-between w-full mb-16 text-ui-fg-muted">
           <Text className="txt-compact-small">
-            © {new Date().getFullYear()} CoShop™
+            © {new Date().getFullYear()} CoShop™ | Map data: <a href="https://www.openstreetmap.org/copyright" className="underline hover:text-ui-fg-base">OpenStreetMap</a> contributors
           </Text>
           {/* <PoweredByLogos /> */}
         </div>
