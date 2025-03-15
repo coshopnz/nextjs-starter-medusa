@@ -4,6 +4,11 @@ import { Button, Heading, Text } from "@medusajs/ui"
 import { usePickupLocation } from "@lib/context/pickup-location-context"
 import { useRouter } from "next/navigation"
 
+
+// Component not being used at the moment
+//
+// TODO: Remove this component
+
 const Hero = () => {
   const { pickupLocation } = usePickupLocation()
   const router = useRouter()

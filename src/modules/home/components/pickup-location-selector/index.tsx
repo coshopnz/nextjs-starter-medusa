@@ -48,7 +48,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
         </Heading>
         
         <Text className="text-center mb-8">
-          Select where you would like to pick up your order on Thursday the 13th of March
+          Select where you would like to pick up your order on Thursday the 20th of March
         </Text>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
