@@ -41,7 +41,7 @@ const OrderCard = ({ order }: OrderCardProps) => {
           numberOfLines > 1 ? "items" : "item"
         }`}</span>
       </div>
-      <div className="grid grid-cols-2 xsmall:grid-cols-2 small:grid-cols-4 gap-4 my-4">
+      <div className="grid grid-cols-2 xsmall:grid-cols-2 tablet:grid-cols-3  small:grid-cols-4 gap-4 my-4">
         {order.items.slice(0, 3).map((i) => {
           return (
             <div
