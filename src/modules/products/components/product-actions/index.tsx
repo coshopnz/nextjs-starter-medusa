@@ -11,6 +11,8 @@ import { useIntersection } from "@lib/hooks/use-in-view"
 import { addToCart } from "@modules/cart/actions"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/option-select"
+import { formatAmount } from "@lib/util/prices"
+import { formatQuantityUnit } from "@modules/common/lib/format-quantity-unit"
 
 import MobileActions from "../mobile-actions"
 import ProductPrice from "../product-price"
@@ -29,12 +31,14 @@ export type PriceType = {
 }
 
 export default function ProductActions({
-  product,
+  product = {} as PricedProduct,
   region,
   disabled,
 }: ProductActionsProps) {
   const [options, setOptions] = useState<Record<string, string>>({})
   const [isAdding, setIsAdding] = useState(false)
+  const [quantity, setQuantity] = useState(1)
+  const [dynamicPrice, setDynamicPrice] = useState<string | null>(null)
 
   const countryCode = useParams().countryCode as string
 
@@ -84,6 +88,31 @@ export default function ProductActions({
     return variants.find((v) => v.id === variantId)
   }, [options, variantRecord, variants])
 
+  // Format amount helper
+  const getAmount = (amount: number | null | undefined) => {
+    if (amount === null || amount === undefined) return ""
+    
+    const formattedPrice = formatAmount({
+      amount: amount,
+      region,
+      includeTaxes: false,
+    })
+    
+    // Remove currency code but keep the dollar sign
+    return formattedPrice.replace(/^[A-Z]{2,3}\$/, "$")
+  }
+
+  // Update dynamic price based on variant and quantity
+  useEffect(() => {
+    if (variant) {
+      const unitPrice = variant.original_price_incl_tax || 0
+      const total = unitPrice * quantity
+      setDynamicPrice(getAmount(total))
+    } else {
+      setDynamicPrice(null)
+    }
+  }, [variant, quantity])
+
   // if product only has one variant, then select it
   useEffect(() => {
     if (variants.length === 1 && variants[0].id) {
@@ -129,12 +158,27 @@ export default function ProductActions({
 
     await addToCart({
       variantId: variant.id,
-      quantity: 1,
+      quantity: quantity,
       countryCode,
     })
 
     setIsAdding(false)
   }
+
+  // Format weight for display
+  const formatWeight = (weight?: number | null): string => {
+    if (!weight) return "";
+    
+    if (weight < 1000) {
+      return `${Math.round(weight)}g`;
+    } else {
+      return `${(weight / 1000).toFixed(1)}kg`;
+    }
+  };
+
+  // Product weight from the variant if available
+  const productWeight = variant?.product?.weight || product?.weight || null;
+  const weightDisplay = formatWeight(productWeight);
 
   return (
     <>
@@ -159,9 +203,45 @@ export default function ProductActions({
               <Divider />
             </div>
           )}
+          
+          {/* Quantity selector */}
+          <div className="flex flex-col gap-y-2 mt-4">
+            <span className="text-sm">Quantity</span>
+            <select 
+              value={quantity}
+              onChange={(e) => setQuantity(parseInt(e.target.value))}
+              className="border-ui-border-base bg-ui-bg-subtle border text-small-regular h-10 rounded-rounded p-2 w-full 2xsmall:w-36 xsmall:w-40"
+              disabled={!!disabled || isAdding}
+            >
+              {Array.from(
+                { length: 10 },
+                (_, i) => (
+                  <option value={i + 1} key={i}>
+                    {formatQuantityUnit(i + 1, productWeight)}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+          
+          <Divider className="mt-4" />
         </div>
 
-        <ProductPrice product={product} variant={variant} region={region} />
+        {/* Show dynamic price if available */}
+        {dynamicPrice ? (
+          <div className="flex flex-col text-ui-fg-base mb-2">
+            <span className="text-xl-semi">
+              {dynamicPrice}
+              {quantity > 1 && weightDisplay && (
+                <span className="text-sm text-ui-fg-subtle ml-2">
+                  {`for ${formatQuantityUnit(quantity, productWeight)}`}
+                </span>
+              )}
+            </span>
+          </div>
+        ) : (
+          <ProductPrice product={product} variant={variant} region={region} />
+        )}
 
         <Button
           onClick={handleAddToCart}
@@ -188,6 +268,8 @@ export default function ProductActions({
           isAdding={isAdding}
           show={!inView}
           optionsDisabled={!!disabled || isAdding}
+          quantity={quantity}
+          setQuantity={setQuantity}
         />
       </div>
     </>

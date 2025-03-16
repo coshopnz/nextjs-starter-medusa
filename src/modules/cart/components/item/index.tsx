@@ -152,26 +152,27 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
 
       <Table.Cell className="text-left">
         <Text className="txt-medium-plus text-ui-fg-base" data-testid="product-title">{item.title}</Text>
-        {/* <LineItemOptions variant={item.variant} data-testid="product-variant" /> */}
         
         {/* Display calculation on mobile screens */}
         {type === "full" && (
           <div className="mt-1 block small:hidden">
-            <Text className="text-sm text-ui-fg-muted" data-testid="product-calculation-mobile">
-              {calculationDisplay}
-            </Text>
+            <div className="flex flex-col">
+              <Text className="text-sm text-ui-fg-muted" data-testid="product-calculation-mobile">
+                {calculationDisplay}
+              </Text>
+            </div>
           </div>
         )}
       </Table.Cell>
 
       {type === "full" && (
-        <Table.Cell>
-          <div className="flex items-center gap-2 w-36">
+        <Table.Cell className="align-top w-32">
+          <div className="flex items-center gap-2 w-full">
             <DeleteButton id={item.id} data-testid="product-delete-button" />
             <CartItemSelect
               value={item.quantity}
               onChange={(value) => changeQuantity(parseInt(value.target.value))}
-              className="h-10 w-24 flex-shrink-0"
+              className="h-10 w-20 2xsmall:w-24 flex-shrink-0"
               data-testid="product-select-button"
             >
               {Array.from(
@@ -197,6 +198,14 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
             </CartItemSelect>
             {updating && <Spinner />}
           </div>
+          {/* Display total on mobile under the quantity selector */}
+          {type === "full" && (
+            <div className="mt-2 block small:hidden text-right">
+              <Text className="text-ui-fg-base font-medium" data-testid="product-total-mobile">
+                Total: <LineItemPrice item={item} region={region} style="tight" />
+              </Text>
+            </div>
+          )}
           <ErrorMessage error={error} data-testid="product-error-message" />
         </Table.Cell>
       )}
@@ -211,18 +220,10 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
         </Table.Cell>
       )}
 
-      <Table.Cell className="!pr-0">
+      <Table.Cell className="!pr-0 hidden small:table-cell align-middle">
         <span
-          className={clx("!pr-0", {
-            "flex flex-col items-end h-full justify-center": type === "preview",
-          })}
+          className="flex items-center justify-end"
         >
-          {type === "preview" && (
-            <span className="flex gap-x-1 ">
-              <Text className="text-ui-fg-muted">{formatQuantityUnit(item.quantity, productWeight)} x </Text>
-              <LineItemUnitPrice item={item} region={region} style="tight" />
-            </span>
-          )}
           <LineItemPrice item={item} region={region} style="tight" />
         </span>
       </Table.Cell>
