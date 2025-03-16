@@ -34,8 +34,8 @@ const Review = ({
   // returns true if user selected manual payment option
   const isManualPayment = cart.payment_session?.provider_id === "manual"
 
-  // Add minimum order check (cart.total is in cents, so 1000 = $10)
-  const isOrderTotalValid = (cart.total ?? 0) >= 1000
+  // Add minimum order check (cart.total is in cents, so 999 = $9.99)
+  const isOrderTotalValid = (cart.total ?? 0) >= 999
 
   // Check if the customer has a previously selected pickup location
   useEffect(() => {

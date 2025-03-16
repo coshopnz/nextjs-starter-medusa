@@ -13,7 +13,7 @@ type SummaryProps = {
 }
 
 const Summary = ({ cart }: SummaryProps) => {
-  const isOrderTotalValid = (cart.total ?? 0) >= 1000
+  const isOrderTotalValid = (cart.total ?? 0) >= 999
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -24,7 +24,7 @@ const Summary = ({ cart }: SummaryProps) => {
       <CartTotals data={cart} />
       {!isOrderTotalValid && (
         <div className="text-rose-500 text-small-regular mb-2">
-          Minimum order amount is $10
+          Minimum order amount is $9.99
         </div>
       )}
       <LocalizedClientLink 
