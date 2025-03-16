@@ -22,7 +22,7 @@ const ItemsTemplate = ({ items, region }: ItemsTemplateProps) => {
             <Table.HeaderCell></Table.HeaderCell>
             <Table.HeaderCell>Quantity</Table.HeaderCell>
             <Table.HeaderCell className="hidden small:table-cell">
-              Price
+              Price Calculation
             </Table.HeaderCell>
             <Table.HeaderCell className="!pr-0 text-right">
               Total

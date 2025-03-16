@@ -12,6 +12,7 @@ import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "@modules/products/components/thumbnail"
+import { formatQuantityUnit } from "@modules/common/lib/format-quantity-unit"
 
 const CartDropdown = ({
   cart: cartState,
@@ -22,16 +23,14 @@ const CartDropdown = ({
     undefined
   )
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false)
-
-  const { countryCode } = useParams()
-
+  
+  const params = useParams() || {}
+  
   const open = () => setCartDropdownOpen(true)
   const close = () => setCartDropdownOpen(false)
 
-  const totalItems =
-    cartState?.items?.reduce((acc, item) => {
-      return acc + item.quantity
-    }, 0) || 0
+  // Count the number of unique items in the cart
+  const totalItems = cartState?.items?.length || 0
 
   const itemRef = useRef<number>(totalItems || 0)
 
@@ -64,7 +63,7 @@ const CartDropdown = ({
 
   // open cart dropdown when modifying the cart items, but only if we're not on the cart page
   useEffect(() => {
-    if (itemRef.current !== totalItems && !pathname.includes("/cart")) {
+    if (itemRef.current !== totalItems && pathname?.includes("/cart") === false) {
       timedOpen()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,21 +127,16 @@ const CartDropdown = ({
                                 <h3 className="overflow-hidden text-base-regular text-ellipsis">
                                   <LocalizedClientLink
                                     href={`/products/${item.variant.product.handle}`}
-                                    data-testid="product-link"
+                                    className="hover:text-ui-fg-base"
                                   >
                                     {item.title}
                                   </LocalizedClientLink>
                                 </h3>
-                                {/* <LineItemOptions
-                                  variant={item.variant}
-                                  data-testid="cart-item-variant"
-                                  data-value={item.variant}
-                                /> */}
                                 <span
                                   data-testid="cart-item-quantity"
                                   data-value={item.quantity}
                                 >
-                                  Quantity: {item.quantity}
+                                  Quantity: {formatQuantityUnit(item.quantity, item.variant.product.weight)}
                                 </span>
                               </div>
                               <div className="flex justify-end">

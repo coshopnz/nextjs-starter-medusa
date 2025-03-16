@@ -9,6 +9,7 @@ import { Cart } from "@medusajs/medusa"
 import { useState, useEffect } from "react"
 import { useCheckout } from "../../context/checkout-context"
 import { usePickupLocation } from "@lib/context/pickup-location-context"
+import { formatQuantityUnit } from "@modules/common/lib/format-quantity-unit"
 
 const Review = ({
   cart,
@@ -205,7 +206,7 @@ const Review = ({
                       <div>
                         <Text className="font-medium">{item.title}</Text>
                         <Text className="text-sm text-gray-500">
-                          Quantity: {item.quantity}
+                          Quantity: {formatQuantityUnit(item.quantity, item.variant.product.weight)}
                         </Text>
                       </div>
                       <Text className="font-medium">

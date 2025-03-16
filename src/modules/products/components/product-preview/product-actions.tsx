@@ -7,6 +7,7 @@ import { addToCart } from "@modules/cart/actions"
 import Spinner from "@modules/common/icons/spinner"
 import { Region } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
+import { formatQuantityUnit } from "@modules/common/lib/format-quantity-unit"
 
 type ProductActionsProps = {
   product: PricedProduct
@@ -17,6 +18,9 @@ export default function ProductActions({ product, region }: ProductActionsProps)
   const [quantity, setQuantity] = useState(1)
   const [isAdding, setIsAdding] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  
+  // Get the product weight if available
+  const productWeight = product.weight
 
   const handleAddToCart = async () => {
     if (!product?.variants?.[0]?.id) return
@@ -46,13 +50,13 @@ export default function ProductActions({ product, region }: ProductActionsProps)
         <CartItemSelect
           value={quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
-          className="h-10 w-14 flex-shrink-0"
+          className="h-10 w-24 flex-shrink-0"
         >
           {Array.from(
             { length: Math.min(inStock ? inventoryQuantity : 10, 10) },
             (_, i) => (
               <option value={i + 1} key={i}>
-                {i + 1}
+                {formatQuantityUnit(i + 1, productWeight)}
               </option>
             )
           )}
