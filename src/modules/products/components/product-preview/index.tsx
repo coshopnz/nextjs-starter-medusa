@@ -25,19 +25,7 @@ export default async function ProductPreview({
     return null
   }
 
-  const getAmount = (amount: number | null | undefined) => {
-    const formattedPrice = formatAmount({
-      amount: amount || 0,
-      region: region,
-      includeTaxes: false,
-    })
-    
-    // Remove currency code but keep the dollar sign
-    // This will change e.g. "NZ$1.23" to "$1.23"
-    return formattedPrice.replace(/^[A-Z]{2,3}\$/, "$")
-  }
-
-  const priceInclGst = getAmount(pricedProduct.variants[0]?.original_price_incl_tax)
+  // No need to calculate static price here since we now show dynamic price in ProductActions
 
   return (
     <div className="group h-full">
@@ -54,7 +42,7 @@ export default async function ProductPreview({
         <div className="flex flex-col mt-2">
           <div className="flex flex-col mb-1">
             <Text className="text-ui-fg-subtle font-medium" data-testid="product-title">{productPreview.title}</Text>
-            <Text className="text-ui-fg-subtle font-medium">{priceInclGst}</Text>
+            {/* Removed static price display since we now show dynamic price in ProductActions */}
           </div>
           <ProductActions product={pricedProduct} region={region} />
         </div>

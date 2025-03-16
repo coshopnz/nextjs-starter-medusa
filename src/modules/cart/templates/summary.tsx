@@ -16,8 +16,8 @@ const Summary = ({ cart }: SummaryProps) => {
   const isOrderTotalValid = (cart.total ?? 0) >= 1000
 
   return (
-    <div className="flex flex-col gap-y-6">
-      <Heading level="h2" className="text-[2rem] leading-[2.75rem]">
+    <div className="flex flex-col gap-y-4">
+      <Heading level="h2" className="text-xl small:text-2xl leading-[1.75rem] small:leading-[2.75rem]">
         Summary
       </Heading>
       <Divider />

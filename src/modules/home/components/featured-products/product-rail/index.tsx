@@ -26,7 +26,7 @@ export default function ProductRail({
           View all
         </InteractiveLink>
       </div>
-      <ul className="grid grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 gap-x-3 gap-y-16 small:gap-y-24">
+      <ul className="grid grid-cols-1 xsmall:grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-4 gap-y-8">
         {products &&
           products.map((product) => (
             <li key={product.id}>
