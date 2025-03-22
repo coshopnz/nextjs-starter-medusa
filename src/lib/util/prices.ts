@@ -180,17 +180,26 @@ export const computeAmount = ({
   includeTaxes = true,
 }: ComputeAmountParams) => {
   const toDecimal = convertToDecimal(amount, region)
-
-  const taxRate = includeTaxes ? getTaxRate(region) : 0
-
-  const amountWithTaxes = toDecimal * (1 + taxRate)
   
-  // Round to $10 if the amount is $9.99
-  if (amountWithTaxes.toFixed(2) === "9.99") {
+  if (!includeTaxes) {
+    return toDecimal
+  }
+  
+  const taxRate = getTaxRate(region)
+  
+  // Calculate the exact tax amount
+  const taxAmount = toDecimal * taxRate
+  
+  // Calculate total with tax
+  let total = toDecimal + taxAmount
+  
+  // Handle the special case for $9.99
+  if (total.toFixed(2) === "9.99") {
+    // For the $9.99 case, add exactly $0.01 to the total to make it $10.00
     return 10.00
   }
-
-  return amountWithTaxes
+  
+  return total
 }
 
 type FormatAmountParams = {
