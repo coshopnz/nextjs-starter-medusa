@@ -194,8 +194,9 @@ export const computeAmount = ({
   let total = toDecimal + taxAmount
   
   // Handle the special case for $9.99
-  if (total.toFixed(2) === "9.99") {
-    // For the $9.99 case, add exactly $0.01 to the total to make it $10.00
+  // Use a more reliable comparison to catch floating point issues
+  const roundedTotal = Math.round(total * 100) / 100;
+  if (roundedTotal === 9.99 || total.toFixed(2) === "9.99") {
     return 10.00
   }
   
