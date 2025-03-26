@@ -68,7 +68,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
                 Located in Mount Cook, Wellington, close to the CBD.
               </Text>
               <Text className="font-medium mb-4">
-                Pickup times: 8:30am-10am and 5pm-6pm
+                Pickup times: 10am-12pm and 5pm-6pm
               </Text>
             </div>
             <LocationMap locationName="Central Park Apartments Community Room" height="180px" />

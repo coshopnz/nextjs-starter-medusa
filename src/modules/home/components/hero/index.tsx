@@ -38,7 +38,7 @@ const Hero = () => {
           <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 max-w-md">
             <Text className="font-medium">Your selected pickup location:</Text>
             <Text className="text-lg font-bold mb-2">{pickupLocation}</Text>
-            <Text className="text-sm text-gray-600 mb-3">8:30am-10am and 5pm-6pm on Thursday</Text>
+            <Text className="text-sm text-gray-600 mb-3">10am-12pm and 5pm-6pm on Thursday</Text>
             <Button 
               variant="secondary"
               onClick={() => router.push("/nz/store")}

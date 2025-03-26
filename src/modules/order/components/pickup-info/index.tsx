@@ -19,7 +19,7 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
     if (location.includes("Karori")) {
       return "Thursday 5pm-6pm only"
     }
-    return "Thursday 8:30am-10am and 5pm-6pm"
+    return "Thursday 10am-12pm and 5pm-6pm"
   }
 
   const pickupTime = getPickupTime(pickupLocation)
