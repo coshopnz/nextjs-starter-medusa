@@ -4,18 +4,24 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button, Heading, Text } from "@medusajs/ui"
 import { usePickupLocation } from "@lib/context/pickup-location-context"
-import dynamic from "next/dynamic"
+import pickupLocationsData from "./pickup-locations.json"
 
-// Import the LocationMap component dynamically with no SSR to avoid Leaflet issues
-const LocationMap = dynamic(
-  () => import("../location-map"),
-  { ssr: false }
-)
+// Define the type for pickup location
+type PickupLocation = {
+  id: string
+  name: string
+  description: string
+  times: string
+  area: string
+}
 
 const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
   const { pickupLocation, setPickupLocation } = usePickupLocation()
   const [selectedLocation, setSelectedLocation] = useState<string>(pickupLocation || "")
   const router = useRouter()
+  
+  // Get locations from the imported JSON file
+  const pickupLocations: PickupLocation[] = pickupLocationsData.locations
 
   // Update local state when context changes
   useEffect(() => {
@@ -35,70 +41,65 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
   }
 
   return (
-    <div className="container mx-auto max-w-2xl px-4">
-      <div className="text-center mb-10 pt-8">
+    <div className="container mx-auto max-w-4xl px-4">
+      <div className="text-center mb-8 pt-8">
         <Text className="text-lg mb-2">
           A Community-run food network with local pickups every week.
         </Text>
       </div>
       
-      <div className="bg-white rounded-lg shadow-md p-8 border border-gray-100">
-        <Heading level="h2" className="text-2xl mb-6 text-center">
+      <div className="bg-white rounded-lg shadow-md p-6 md:p-8 border border-gray-100">
+        <Heading level="h2" className="text-2xl mb-4 text-center">
           Choose Your Hub
         </Heading>
         
-        <Text className="text-center mb-8">
+        <Text className="text-center mb-6">
           Select where you would like to pick up your order on Thursday the 3rd of April
         </Text>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <div 
-            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md flex flex-col ${
-              selectedLocation === "Central Park Apartments Community Room" 
-                ? "border-2 border-blue-500 bg-blue-50" 
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-            onClick={() => handleLocationSelect("Central Park Apartments Community Room")}
-          >
-            <div className="flex-1">
-              <Heading level="h3" className="text-xl mb-3">
-                Central Park Apartments Community Room
-              </Heading>
-              <Text className="text-gray-600 mb-3">
-                Located in Mount Cook, Wellington, close to the CBD.
-              </Text>
-              <Text className="font-medium mb-4">
-                Pickup times: 10am-12pm and 5pm-6pm
-              </Text>
-            </div>
-            <LocationMap locationName="Central Park Apartments Community Room" height="180px" />
-          </div>
-
-          <div 
-            className={`border rounded-lg p-6 cursor-pointer transition-all hover:shadow-md flex flex-col ${
-              selectedLocation === "Karori Community Center" 
-                ? "border-2 border-blue-500 bg-blue-50" 
-                : "border-gray-200 hover:border-gray-300"
-            }`}
-            onClick={() => handleLocationSelect("Karori Community Center")}
-          >
-            <div className="flex-1">
-              <Heading level="h3" className="text-xl mb-3">
-                Karori Community Center
-              </Heading>
-              <Text className="text-gray-600 mb-3">
-                Located in Karori, perfect for local residents.
-              </Text>
-              <Text className="font-medium mb-4">
-                Pickup time: 5pm-6pm
-              </Text>
-            </div>
-            <LocationMap locationName="Karori Community Center" height="180px" />
+        {/* Mobile-friendly scrollable container */}
+        <div className="max-h-[70vh] overflow-y-auto pr-2 -mr-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+            {pickupLocations.map((location) => (
+              <div 
+                key={location.id}
+                className={`border rounded-lg p-4 cursor-pointer transition-all hover:shadow-md flex flex-col ${
+                  selectedLocation === location.name 
+                    ? "border-2 border-blue-500 bg-blue-50" 
+                    : "border-gray-200 hover:border-gray-300"
+                }`}
+                onClick={() => handleLocationSelect(location.name)}
+              >
+                <div className="flex-1">
+                  <div className="flex items-center justify-between mb-2">
+                    <Heading level="h3" className="text-lg">
+                      {location.name}
+                    </Heading>
+                    <div className={`h-4 w-4 rounded-full ${
+                      selectedLocation === location.name
+                        ? "bg-blue-500"
+                        : "bg-gray-200"
+                    }`} />
+                  </div>
+                  <Text className="text-sm text-gray-600 mb-2">
+                    {location.description}
+                  </Text>
+                  <div className="mt-2">
+                    <Text className="text-xs font-medium text-gray-500 uppercase">
+                      {location.area}
+                    </Text>
+                    <Text className="text-sm font-medium text-gray-700">
+                      {location.times}
+                    </Text>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
         {selectedLocation && (
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center mt-6">
             <Button 
               onClick={handleContinue}
               className="min-w-[200px] py-3 text-lg"
@@ -109,7 +110,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
         )}
 
         {!selectedLocation && (
-          <Text className="text-center text-gray-500 italic mt-6">
+          <Text className="text-center text-gray-500 italic mt-4">
             Please select a pickup location to continue
           </Text>
         )}
