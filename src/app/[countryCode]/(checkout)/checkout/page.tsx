@@ -30,19 +30,22 @@ const fetchCart = async () => {
   return cart
 }
 
-export default async function Checkout() {
+export default async function Checkout({ searchParams }: { searchParams: { step?: string } }) {
   const cart = await fetchCart()
 
   if (!cart) {
     return notFound()
   }
 
+  // Check if we're on the review step
+  const isReviewStep = searchParams.step === "review"
+
   return (
     <div className="grid grid-cols-1 small:grid-cols-[1fr_416px] content-container gap-x-40 py-12">
       <Wrapper cart={cart}>
         <CheckoutForm />
       </Wrapper>
-      <CheckoutSummary />
+      {!isReviewStep && <CheckoutSummary />}
     </div>
   )
 }

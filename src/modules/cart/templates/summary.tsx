@@ -10,9 +10,10 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 
 type SummaryProps = {
   cart: CartWithCheckoutStep
+  displayCheckoutButton?: boolean
 }
 
-const Summary = ({ cart }: SummaryProps) => {
+const Summary = ({ cart, displayCheckoutButton = true }: SummaryProps) => {
   const isOrderTotalValid = (cart.total ?? 0) >= 999
 
   return (
@@ -27,18 +28,20 @@ const Summary = ({ cart }: SummaryProps) => {
           Minimum order amount is $9.99
         </div>
       )}
-      <LocalizedClientLink 
-        href={isOrderTotalValid ? "/checkout?step=" + cart.checkout_step : "#"}
-        className={!isOrderTotalValid ? "cursor-not-allowed" : ""}
-        data-testid="checkout-button"
-      >
-        <Button 
-          className="w-full h-12 text-base font-medium" 
-          disabled={!isOrderTotalValid}
+      {displayCheckoutButton && (
+        <LocalizedClientLink 
+          href={isOrderTotalValid ? "/checkout?step=" + cart.checkout_step : "#"}
+          className={!isOrderTotalValid ? "cursor-not-allowed" : ""}
+          data-testid="checkout-button"
         >
-          Go to checkout
-        </Button>
-      </LocalizedClientLink>
+          <Button 
+            className="w-full h-12 text-base font-medium" 
+            disabled={!isOrderTotalValid}
+          >
+            Go to checkout
+          </Button>
+        </LocalizedClientLink>
+      )}
     </div>
   )
 }

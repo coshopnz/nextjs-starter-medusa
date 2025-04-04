@@ -9,6 +9,10 @@ import OnboardingCta from "@modules/order/components/onboarding-cta"
 import ShippingDetails from "@modules/order/components/shipping-details"
 import PaymentDetails from "@modules/order/components/payment-details"
 import OrderConfirmationDetails from "../components/order-confirmation-details"
+import dynamic from "next/dynamic"
+
+// Import the ScrollToTop component with dynamic import to ensure it only runs on the client
+const ScrollToTop = dynamic(() => import("../components/scroll-to-top"), { ssr: false })
 
 type OrderCompletedTemplateProps = {
   order: Order
@@ -21,6 +25,8 @@ export default function OrderCompletedTemplate({
 
   return (
     <div className="py-14 min-h-[calc(100vh-64px)]">
+      {/* Add the ScrollToTop component */}
+      <ScrollToTop />
       <div className="flex flex-col items-center justify-center w-full h-full max-w-4xl content-container gap-y-10">
         {isOnboarding && <OnboardingCta orderId={order.id} />}
         <div className="flex flex-col w-full h-full max-w-4xl gap-6 p-8 bg-white rounded-lg shadow-sm" data-testid="order-complete-container">
