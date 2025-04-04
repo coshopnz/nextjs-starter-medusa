@@ -10,6 +10,14 @@ import { useState, useEffect } from "react"
 import { useCheckout } from "../../context/checkout-context"
 import { usePickupLocation } from "@lib/context/pickup-location-context"
 import { formatQuantityUnit } from "@modules/common/lib/format-quantity-unit"
+import dynamic from "next/dynamic"
+import pickupLocationsData from "../../../home/components/pickup-location-selector/pickup-locations.json"
+
+// Import the ReviewLocationMap component dynamically with no SSR
+const ReviewLocationMap = dynamic(
+  () => import("../review-location-map/index"),
+  { ssr: false }
+)
 
 const Review = ({
   cart,
@@ -129,70 +137,40 @@ const Review = ({
               
               {/* Button-style location selectors */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-2">
-                <button
-                  type="button"
-                  onClick={() => setPickupLocation("Central Park Apartments Community Room")}
-                  className={`p-4 rounded-md border transition-colors ${
-                    pickupLocation === "Central Park Apartments Community Room"
-                      ? "border-2 border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:border-gray-300 bg-white"
-                  }`}
-                  data-testid="pickup-location-central-park"
-                >
-                  <div className="flex items-start">
-                    <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
-                      pickupLocation === "Central Park Apartments Community Room"
-                        ? "bg-blue-500"
-                        : "bg-gray-200"
-                    }`}></div>
-                    <div className="text-left">
-                      <Text className="font-medium">Central Park Apartments Community Room</Text>
-                      <Text className="text-sm text-gray-600">
-                        Thursday pickup: 10am-12pm and 5pm-6pm
-                      </Text>
+                {pickupLocationsData.locations.map((location) => (
+                  <button
+                    key={location.id}
+                    type="button"
+                    onClick={() => setPickupLocation(location.name)}
+                    className={`p-4 rounded-md border transition-colors ${
+                      pickupLocation === location.name
+                        ? "border-2 border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:border-gray-300 bg-white"
+                    }`}
+                    data-testid={`pickup-location-${location.id}`}
+                  >
+                    <div className="flex items-start">
+                      <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
+                        pickupLocation === location.name
+                          ? "bg-blue-500"
+                          : "bg-gray-200"
+                      }`}></div>
+                      <div className="text-left">
+                        <Text className="font-medium">{location.name}</Text>
+                        <Text className="text-sm text-gray-600">
+                          Thursday pickup: {location.times}
+                        </Text>
+                      </div>
                     </div>
-                  </div>
-                </button>
-                
-                <button
-                  type="button"
-                  onClick={() => setPickupLocation("Karori Community Center")}
-                  className={`p-4 rounded-md border transition-colors ${
-                    pickupLocation === "Karori Community Center"
-                      ? "border-2 border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:border-gray-300 bg-white"
-                  }`}
-                  data-testid="pickup-location-karori"
-                >
-                  <div className="flex items-start">
-                    <div className={`h-5 w-5 rounded-full mr-3 mt-0.5 ${
-                      pickupLocation === "Karori Community Center"
-                        ? "bg-blue-500"
-                        : "bg-gray-200"
-                    }`}></div>
-                    <div className="text-left">
-                      <Text className="font-medium">Karori Community Center</Text>
-                      <Text className="text-sm text-gray-600">
-                        Thursday pickup: 5pm-6pm only
-                      </Text>
-                    </div>
-                  </div>
-                </button>
+                  </button>
+                ))}
               </div>
               
-              {/* Display pickup time based on selected location */}
+              {/* Display the location map for the selected location */}
               {pickupLocation && (
-                <Text className="text-sm text-gray-600 mt-2">
-                  {pickupLocation === "Central Park Apartments Community Room" 
-                    ? "Thursday pickup times: 10am-12pm and 5pm-6pm" 
-                    : "Thursday pickup time: 5pm-6pm only"}
-                </Text>
-              )}
-              
-              {isOpen && pickupLocation === "" && (
-                <Text className="mt-2 text-sm text-ui-fg-error">
-                  Please select a pickup location
-                </Text>
+                <div className="mt-4">
+                  <ReviewLocationMap locationName={pickupLocation} height="250px" />
+                </div>
               )}
             </div>
             

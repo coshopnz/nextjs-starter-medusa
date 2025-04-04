@@ -1,0 +1,37 @@
+{
+  "locations": [
+    {
+      "id": "central-park",
+      "name": "Central Park Apartments Community Room",
+      "description": "19 Brooklyn Road, Mt Cook",
+      "times": "10am-12pm and 5pm-6pm",
+      "area": "Mount Cook",
+      "coordinates": {
+        "lat": -41.2977,
+        "lng": 174.7696
+      }
+    },
+    {
+      "id": "karori",
+      "name": "Karori Community Center",
+      "description": "7 Beauchamp Street, Karori",
+      "times": "5pm-6pm",
+      "area": "Karori",
+      "coordinates": {
+        "lat": -41.2852,
+        "lng": 174.7382
+      }
+    },
+    {
+      "id": "vogelmorn",
+      "name": "Vogelmorn Bowling Club",
+      "description": "93 Mornington Road, Brooklyn",
+      "times": "11am-12pm",
+      "area": "Brooklyn",
+      "coordinates": {
+        "lat": -41.3141528,
+        "lng": 174.7642726
+      }
+    }
+  ]
+} 

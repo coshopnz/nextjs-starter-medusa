@@ -250,7 +250,20 @@ export async function placeOrder(pickupLocation?: string) {
   if (cart?.type === "order") {
     const countryCode = cart.data.shipping_address?.country_code?.toLowerCase()
     cookies().set("_medusa_cart_id", "", { maxAge: -1 })
-    redirect(`/${countryCode}/order/confirmed/${cart?.data.id}`)
+    
+    // Wrap the redirect in a try-catch to handle any scrollTo errors
+    try {
+      redirect(`/${countryCode}/order/confirmed/${cart?.data.id}`)
+    } catch (error) {
+      // If the redirect fails or causes an error, use a client-side redirect
+      // This works as a fallback in case there's an issue with Next.js navigation
+      if (typeof window !== 'undefined') {
+        window.location.href = `/${countryCode}/order/confirmed/${cart?.data.id}`
+      } else {
+        // Server-side fallback
+        redirect(`/${countryCode}/order/confirmed/${cart?.data.id}`)
+      }
+    }
   }
 
   return cart

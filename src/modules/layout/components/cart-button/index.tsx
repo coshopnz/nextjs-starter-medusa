@@ -33,7 +33,7 @@ export default async function CartButton() {
     }) : null
 
   return (
-    <div className="flex items-center"> 
+    <div className="flex items-center hidden md:flex"> 
       <CartDropdown cart={cart} />
       <LocalizedClientLink href="/cart" className="ml-2 mr-4 relative flex items-center">
         <BsCart className="h-5 w-5" />
