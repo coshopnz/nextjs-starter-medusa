@@ -20,10 +20,12 @@ export default async function ProductPreview({
   // If we already have a PricedProduct, use it directly
   const pricedProduct = 'options' in productPreview && productPreview.options 
     ? productPreview as PricedProduct 
-    : await retrievePricedProductById({
-        id: productPreview.id,
-        regionId: region.id,
-      }).then((product) => product)
+    : productPreview.id
+      ? await retrievePricedProductById({
+          id: productPreview.id,
+          regionId: region.id,
+        }).then((product) => product)
+      : null
 
   if (!pricedProduct) {
     return null
