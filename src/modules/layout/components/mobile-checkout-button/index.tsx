@@ -9,7 +9,7 @@ import { Button } from "@medusajs/ui"
 
 const MobileCheckoutButton = () => {
   const [cart, setCart] = useState<Cart | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+  const [initialLoading, setInitialLoading] = useState(true)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -27,32 +27,67 @@ const MobileCheckoutButton = () => {
     return /^\/[a-z]{2}$/i.test(path)
   }
 
+  // Helper function to compare carts
+  function isCartChanged(oldCart: Cart | null, newCart: Cart | null): boolean {
+    if (!oldCart && !newCart) return false
+    if (!oldCart || !newCart) return true
+    
+    // Check total and number of items
+    if (oldCart.total !== newCart.total || 
+        oldCart.items.length !== newCart.items.length) {
+      return true
+    }
+    
+    return false
+  }
+
   useEffect(() => {
+    let isMounted = true
+
     const fetchCart = async () => {
-      setIsLoading(true)
       try {
-        const cartData = await retrieveCart()
-        setCart(cartData as Cart)
+        const cartData = await retrieveCart() as Cart
+        
+        if (isMounted) {
+          // Only update state if cart has changed
+          if (isCartChanged(cart, cartData)) {
+            setCart(cartData)
+          }
+          
+          // Only set initial loading to false once
+          if (initialLoading) {
+            setInitialLoading(false)
+          }
+        }
       } catch (error) {
         console.error("Error fetching cart:", error)
-      } finally {
-        setIsLoading(false)
+        if (isMounted && initialLoading) {
+          setInitialLoading(false)
+        }
       }
     }
 
     fetchCart()
 
-    // Set up polling to check for cart updates every 2 seconds
-    const intervalId = setInterval(fetchCart, 2000)
+    // Set up polling with a slightly longer interval
+    const intervalId = setInterval(fetchCart, 5000)
     
-    return () => clearInterval(intervalId)
-  }, [])
+    return () => {
+      isMounted = false
+      clearInterval(intervalId)
+    }
+  }, [cart, initialLoading])
 
   const handleClick = () => {
     router.push("/cart")
   }
 
-  if (!shouldShow || isLoading) {
+  if (!shouldShow) {
+    return null
+  }
+
+  // Only show loading state during initial load
+  if (initialLoading) {
     return null
   }
 
