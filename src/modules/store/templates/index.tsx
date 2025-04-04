@@ -49,14 +49,14 @@ const StoreTemplate = async ({
         
         return {
           handle,
-          title: handle === "produce" ? "Produce" : "Bakery",
+          title: handle === "produce" ? "Produce" : "Shelly Bay Baker Bread",
           products: productsWithOptions as (ProductPreviewType | PricedProduct)[],
         }
       } catch (error) {
         console.error(`Error fetching products for collection ${handle}:`, error)
         return {
           handle,
-          title: handle === "produce" ? "Produce" : "Bakery",
+          title: handle === "produce" ? "Produce" : "Shelly Bay Baker Bread",
           products: [],
         }
       }
