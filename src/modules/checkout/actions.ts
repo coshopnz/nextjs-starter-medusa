@@ -176,7 +176,7 @@ export async function setPaymentMethod(providerId: string) {
 }
 
 // this action is called when the user clicks the "Place Order" button to finalise the checkout process and redirect the user to the checkout page
-export async function placeOrder(pickupLocation?: string) {
+export async function placeOrder(pickupLocation?: string, donationConsent?: boolean) {
   const cartId = cookies().get("_medusa_cart_id")?.value
 
   if (!cartId) throw new Error("No cartId cookie found")
@@ -199,6 +199,7 @@ export async function placeOrder(pickupLocation?: string) {
               metadata: {
                 ...(customer.metadata || {}),
                 pickup_location: pickupLocation,
+                donation_consent: donationConsent,
                 last_updated: new Date().toISOString()
               }
             })

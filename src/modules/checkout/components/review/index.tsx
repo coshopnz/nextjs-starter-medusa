@@ -25,7 +25,7 @@ const Review = ({
   cart: Omit<Cart, "refundable_amount" | "refunded_total">
 }) => {
   const searchParams = useSearchParams()
-  const { pickupLocation, setPickupLocation } = useCheckout()
+  const { pickupLocation, setPickupLocation, donationConsent, setDonationConsent } = useCheckout()
   const [previousLocation, setPreviousLocation] = useState<string | null>(null)
   const { pickupLocation: globalPickupLocation } = usePickupLocation()
 
@@ -252,7 +252,24 @@ const Review = ({
             </div>
           </div>
           
-          {isOrderTotalValid && pickupLocation !== "" && (
+          {/* Donation Consent Checkbox */}
+          <div className="mb-6 p-4 border border-blue-300 rounded-lg bg-blue-50">
+            <div className="flex items-start">
+              <input
+                type="checkbox"
+                id="donation-consent"
+                checked={donationConsent}
+                onChange={(e) => setDonationConsent(e.target.checked)}
+                className="mt-1 h-5 w-5 text-blue-600 border-blue-400 rounded focus:ring-blue-500 focus:ring-2"
+                data-testid="donation-consent-checkbox"
+              />
+              <Text className="ml-2 text-gray-800">
+                I understand that Hauora Kai cannot store food after the pickup time and if I miss my pickup time, any food items will be donated.
+              </Text>
+            </div>
+          </div>
+          
+          {isOrderTotalValid && pickupLocation !== "" && donationConsent && (
             <div className="flex justify-center mt-6">
               <PaymentButton cart={cart} data-testid="submit-order-button" />
             </div>

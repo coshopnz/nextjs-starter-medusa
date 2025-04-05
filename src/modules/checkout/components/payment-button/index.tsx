@@ -20,7 +20,7 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
   "data-testid": dataTestId,
 }) => {
-  const { pickupLocation } = useCheckout()
+  const { pickupLocation, donationConsent } = useCheckout()
   
   // TODO tidy up this logic by deleting comments if confirmed data is not needed
   const notReady =
@@ -69,11 +69,11 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
 
 const GiftCardPaymentButton = () => {
   const [submitting, setSubmitting] = useState(false)
-  const { pickupLocation } = useCheckout()
+  const { pickupLocation, donationConsent } = useCheckout()
 
   const handleOrder = async () => {
     setSubmitting(true)
-    await placeOrder(pickupLocation)
+    await placeOrder(pickupLocation, donationConsent)
   }
 
   return (
@@ -98,10 +98,10 @@ const StripePaymentButton = ({
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const { pickupLocation } = useCheckout()
+  const { pickupLocation, donationConsent } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder(pickupLocation).catch(() => {
+    await placeOrder(pickupLocation, donationConsent).catch(() => {
       setErrorMessage("An error occurred, please try again.")
       setSubmitting(false)
     })
@@ -201,10 +201,10 @@ const PayPalPaymentButton = ({
 }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const { pickupLocation } = useCheckout()
+  const { pickupLocation, donationConsent } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder(pickupLocation).catch(() => {
+    await placeOrder(pickupLocation, donationConsent).catch(() => {
       setErrorMessage("An error occurred, please try again.")
       setSubmitting(false)
     })
@@ -259,10 +259,10 @@ const PayPalPaymentButton = ({
 const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
   const [submitting, setSubmitting] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const { pickupLocation } = useCheckout()
+  const { pickupLocation, donationConsent } = useCheckout()
 
   const onPaymentCompleted = async () => {
-    await placeOrder(pickupLocation).catch((err) => {
+    await placeOrder(pickupLocation, donationConsent).catch((err) => {
       setErrorMessage(err.toString())
       setSubmitting(false)
     })
