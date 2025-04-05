@@ -73,7 +73,7 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
         </div>
       </div>
       <Text className="text-ui-fg-subtle text-sm font-medium p-3 bg-amber-50 rounded-lg border border-amber-100">
-        ⚠️ If you fail to pick up your order during the scheduled time, it will be donated to the Pataka Kai.
+        ⚠️ If you fail to pick up your order during the scheduled time, it will be donated.
       </Text>
     </div>
   )
