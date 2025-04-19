@@ -5,9 +5,8 @@ import { Fragment } from "react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import HamburgerIcon from "@modules/common/icons/hamburger"
 
-const categories = [
-  { name: "Produce", href: "/store?category=produce" },
-  { name: "Bread", href: "/store?category=bread" },
+const menuItems = [
+  { name: "About", href: "/about" },
 ]
 
 const CategoryMenu = () => {
@@ -23,7 +22,7 @@ const CategoryMenu = () => {
                   data-testid="category-menu-button"
                 >
                   <HamburgerIcon className="w-5 h-5" />
-                  <span className="ml-2 font-medium sm:block hidden">Categories</span>
+                  <span className="ml-2 font-medium sm:block hidden">Menu</span>
                 </Popover.Button>
               </div>
 
@@ -41,15 +40,15 @@ const CategoryMenu = () => {
                   className="absolute top-full left-0 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-2 z-50"
                   data-testid="category-menu-popup"
                 >
-                  {categories.map((category) => (
+                  {menuItems.map((item) => (
                     <LocalizedClientLink
-                      key={category.name}
-                      href={category.href}
+                      key={item.name}
+                      href={item.href}
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={close}
-                      data-testid={`${category.name.toLowerCase()}-link`}
+                      data-testid={`${item.name.toLowerCase()}-link`}
                     >
-                      {category.name}
+                      {item.name}
                     </LocalizedClientLink>
                   ))}
                 </Popover.Panel>
