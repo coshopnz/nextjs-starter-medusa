@@ -24,7 +24,7 @@ const StoreTemplate = async ({
   }
 
   // Define the collections we want to display in order
-  const collectionHandles = ["produce", "bakery"]
+  const collectionHandles = ["produce", "value-packs", "bakery"]
   
   // Fetch products for each collection
   const collectionsWithProducts = await Promise.all(
@@ -49,14 +49,18 @@ const StoreTemplate = async ({
         
         return {
           handle,
-          title: handle === "produce" ? "Produce" : "Shelly Bay Baker - Order by 11am Monday",
+          title: handle === "produce" ? "Produce" : 
+                 handle === "value-packs" ? "Value Packs" : 
+                 "Shelly Bay Baker - Order by 11am Monday",
           products: productsWithOptions as (ProductPreviewType | PricedProduct)[],
         }
       } catch (error) {
         console.error(`Error fetching products for collection ${handle}:`, error)
         return {
           handle,
-          title: handle === "produce" ? "Produce" : "Shelly Bay Baker - Order by 11am Monday",
+          title: handle === "produce" ? "Produce" : 
+                 handle === "value-packs" ? "Value Packs" : 
+                 "Shelly Bay Baker - Order by 11am Monday",
           products: [],
         }
       }
