@@ -27,7 +27,7 @@ const Hero = () => {
             level="h2"
             className="text-2xl leading-8 text-ui-fg-base font-normal mb-4"
           >
-            Ordering Now Open For Thursday 8th of May Pickup
+            Ordering Now Open For Thursday 15th of May Pickup
           </Heading>
           <Text className="text-lg">
             Choose your preferred pickup location below to get started
