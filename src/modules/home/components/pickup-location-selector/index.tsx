@@ -54,7 +54,7 @@ const PickupLocationSelector = ({ countryCode }: { countryCode: string }) => {
         </Heading>
         
         <Text className="text-center mb-6">
-          Select where you would like to pick up your order on Thursday 15th of May
+          Select where you would like to pick up your order on Thursday 22nd of May
         </Text>
 
         {/* Mobile-friendly scrollable container */}
