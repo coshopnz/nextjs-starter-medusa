@@ -5,7 +5,12 @@ import { Fragment } from "react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import HamburgerIcon from "@modules/common/icons/hamburger"
 
-const menuItems = [
+interface MenuItem {
+  name: string
+  href: string
+}
+
+const menuItems: MenuItem[] = [
   { name: "About", href: "/about" },
 ]
 
