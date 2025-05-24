@@ -2,6 +2,7 @@
 
 import { Cart } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
+import pickupLocationsData from "@modules/home/components/pickup-location-selector/pickup-locations.json"
 
 type OrderSummaryProps = {
   cart: Omit<Cart, "refundable_amount" | "refunded_total">
@@ -18,6 +19,19 @@ const OrderSummary = ({ cart, pickupLocation }: OrderSummaryProps) => {
     // Convert cents to dollars and format with 2 decimal places
     const dollars = (amount / 100).toFixed(2)
     return `$${dollars}`
+  }
+
+  // Get pickup time based on location
+  const getPickupTimeText = (location: string): string => {
+    const locationData = pickupLocationsData.locations.find(
+      loc => loc.name === location
+    )
+    
+    if (locationData) {
+      return `Thursday pickup times: ${locationData.times}`
+    }
+    
+    return "Please check your email for pickup details"
   }
 
   return (
@@ -54,7 +68,7 @@ const OrderSummary = ({ cart, pickupLocation }: OrderSummaryProps) => {
           <Text className="font-bold">{pickupLocation}</Text>
         </div>
         <Text className="text-sm text-gray-600 mt-1">
-          Thursday pickup times: 10am-12pm and 5pm-6pm
+          {getPickupTimeText(pickupLocation)}
         </Text>
       </div>
       
