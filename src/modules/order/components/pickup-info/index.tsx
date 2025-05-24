@@ -2,6 +2,7 @@
 
 import { Order } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
+import pickupLocationsData from "@modules/home/components/pickup-location-selector/pickup-locations.json"
 
 type PickUpInfoProps = {
   order: Order
@@ -14,12 +15,17 @@ const PickUpInfo = ({ order }: PickUpInfoProps) => {
   // Extract pickup location from the shipping address's address_2 field
   const pickupLocation = order.shipping_address?.address_2?.replace("Pickup: ", "") || ""
   
-  // Determine pickup times based on the location
+  // Determine pickup times based on the location using actual data
   const getPickupTime = (location: string) => {
-    if (location.includes("Karori")) {
-      return "Thursday 5pm-6pm only"
+    const locationData = pickupLocationsData.locations.find(
+      loc => loc.name === location
+    )
+    
+    if (locationData) {
+      return `Thursday ${locationData.times}`
     }
-    return "Thursday 10am-12pm and 5pm-6pm"
+    
+    return "Please check your email for pickup details"
   }
 
   const pickupTime = getPickupTime(pickupLocation)
